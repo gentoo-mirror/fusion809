@@ -3,8 +3,8 @@
 # $Header: /var/cvsroot/gentoo-x86/app-editors/gvim/gvim-9999.ebuild,v 1.31 2015/05/16 09:19:00 pacho Exp $
 
 EAPI=5
-VIM_VERSION="7.4"
-PYTHON_COMPAT=( python{2_7,3_3,3_4} )
+VIM_VERSION="8.0"
+PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5,3_6} )
 PYTHON_REQ_USE=threads
 inherit eutils vim-doc flag-o-matic fdo-mime versionator bash-completion-r1 prefix python-r1
 

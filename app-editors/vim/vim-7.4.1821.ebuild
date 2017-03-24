@@ -2,7 +2,7 @@
 
 EAPI=5
 VIM_VERSION="7.4"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5} )
+PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5,3_6} )
 PYTHON_REQ_USE=threads
 inherit eutils vim-doc flag-o-matic fdo-mime versionator bash-completion-r1 python-r1
 
