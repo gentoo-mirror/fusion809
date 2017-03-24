@@ -53,21 +53,22 @@ DEPEND="sys-devel/binutils"
 S="${WORKDIR}"
 
 src_unpack() {
-	echo "*** A = ${A}"
-	#unpack ${A}
-	ls -la "${DISTDIR}"
-	ln -sf "${DISTDIR}"/${A} ${A}
-	ls -la
-	deb2targz ${A} || exit 1
-	rm -f ${A}
-	mv Brackets.Release.${PV}.64-bit.tar.xz data.tar.xz || exit 1
-	echo "*** After unpack ***"
+    echo "*** A = ${A}"
+    #unpack ${A}
+    ls -la "${DISTDIR}"
+    ln -sf "${DISTDIR}"/${A} ${A}
+    ls -la
+    deb2targz ${A} || exit 1
+    rm -f ${A}
+    mv Brackets.Release.${PV}.64-bit.tar.xz data.tar.xz || exit 1
+    echo "*** After unpack ***"
 }
 
 src_install() {
-tar xJf data.tar.xz -C "${D}"
+    tar xJf data.tar.xz -C "${D}"
 }
 
 pkg_postinst() {
-ln -s /usr/lib/libudev.so /opt/brackets/libudev.so.0
+    ln -s /usr/lib/libudev.so /opt/brackets/libudev.so.0
+    ln -s /opt/brackets/brackets.desktop /usr/share/applications/brackets.desktop
 }
