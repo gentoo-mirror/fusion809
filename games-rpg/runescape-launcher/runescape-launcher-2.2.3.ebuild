@@ -14,7 +14,7 @@ QA_PREBUILT="/opt/runescape-launcher/runescape"
 
 SLOT="0"
 
-IUSE="kde"
+IUSE="bumblebee kde"
 
 KEYWORDS="-* ~amd64"
 
@@ -24,6 +24,7 @@ RESTRICT="bindist mirror strip"
 S="${WORKDIR}"
 
 RDEPEND="
+	bumblebee? ( x11-misc/bumblebee )
 	media-libs/libpng:1.2
 	>=media-libs/libsdl2-2.0.2
 	>=media-libs/glew-1.10.0:0/1.10
@@ -64,6 +65,10 @@ src_install() {
 	if use kde ; then
 		insinto /usr/share/kde4
 		doins -r usr/share/kde4/services
+	fi
+
+	if use bumblebee ; then
+		make_desktop_entry "optirun ${PN}" "RuneScape (Optirun)"
 	fi
 }
 
