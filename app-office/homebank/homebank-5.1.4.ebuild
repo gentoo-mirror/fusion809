@@ -47,4 +47,5 @@ pkg_postrm() {
 	fdo-mime_desktop_database_update
 	fdo-mime_mime_database_update
 	gnome2_icon_cache_update
+	gtk-update-icon-cache -f -t /usr/share/icons/hicolor
 }
