@@ -1,4 +1,3 @@
-# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
@@ -7,17 +6,11 @@ inherit unpacker xdg gnome2-utils
 
 DESCRIPTION="Official RuneScape NXT client launcher"
 HOMEPAGE="http://www.runescape.com"
-
 SRC_URI="http://content.runescape.com/downloads/ubuntu/pool/non-free/r/${PN}/${PN}_${PV}_amd64.deb"
-
 QA_PREBUILT="/opt/runescape-launcher/runescape"
-
 SLOT="0"
-
 IUSE="bumblebee kde"
-
 KEYWORDS="-* ~amd64"
-
 LICENSE="RuneScape-EULA"
 RESTRICT="bindist mirror strip"
 
