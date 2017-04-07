@@ -1,6 +1,4 @@
-# Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
 
 EAPI=6
 
@@ -8,11 +6,10 @@ inherit eutils versionator
 
 RNAME="neon"
 SR=$(get_version_component_range 3 $PV)
-
-DESCRIPTION="Eclipse IDE for Android"
+DESCRIPTION="Eclipse IDE for JavaScript"
 HOMEPAGE="http://www.eclipse.org"
 
-SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-android-${RNAME}-${SR}-incubation-linux-gtk"
+SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-javascript-${RNAME}-${SR}-linux-gtk"
 
 SRC_URI="
 	amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> ${P}-x86_64.tar.gz )
@@ -50,7 +47,6 @@ src_install() {
 	insinto /etc
 	newins "${T}"/eclipserc-bin-${SLOT} eclipserc-bin-${SLOT}
 
-	newbin "${T}"/eclipse-bin-${SLOT} eclipse-android-${SLOT}
-	make_desktop_entry "eclipse-android-${SLOT}" "Eclipse Android IDE" "${dest}/icon.xpm" "Development;IDE"
-
+	newbin "${T}"/eclipse-bin-${SLOT} eclipse-javascript-${SLOT}
+	make_desktop_entry "eclipse-javascript-${SLOT}" "Eclipse JavaScript IDE" "${dest}/icon.xpm" "Development;IDE"
 }
