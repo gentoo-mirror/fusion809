@@ -1,6 +1,4 @@
-# Copyright 1999-2015 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
-# $Header: /var/cvsroot/gentoo-x86/app-editors/gvim/gvim-9999.ebuild,v 1.31 2015/05/16 09:19:00 pacho Exp $
 
 EAPI=5
 VIM_VERSION="8.0"
