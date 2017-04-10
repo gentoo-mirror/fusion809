@@ -1,1 +1,0 @@
-The only reason why this ebuild is in this repository is due to a bug I encountered on Funtoo Linux that could only be fixed with using this improved ebuild. This issue has been reported but thanks to Funtoo's strategy is using shards to maintain 'stability' in their system the fix hasn't been added to their repo yet. 
