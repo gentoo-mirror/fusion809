@@ -6,8 +6,8 @@ EAPI=5
 
 inherit check-reqs eutils gnome2-utils
 
-ENGINE_PV=4.2.023
-FULL_P=UrbanTerror42_full017
+ENGINE_PV=4.3.2
+FULL_P=UrbanTerror432_full
 UPDATE_PV=${PV:0:3}.${FULL_P#*full}
 DESCRIPTION="Hollywood tactical shooter based on the ioquake3 engine"
 HOMEPAGE="http://www.urbanterror.info/home/"
@@ -49,7 +49,7 @@ DEPEND="${RDEPEND}
 	dedicated? ( curl? ( net-misc/curl ) )"
 
 S=${WORKDIR}/ioq3-for-UrbanTerror-4-release-${ENGINE_PV}
-S_DATA=${WORKDIR}/UrbanTerror42
+S_DATA=${WORKDIR}/UrbanTerror43
 
 CHECKREQS_DISK_BUILD="3300M"
 CHECKREQS_DISK_USR="1550M"
@@ -111,7 +111,7 @@ src_install() {
 	local my_arch=$(usex amd64 "x86_64" "i386")
 
 	dodoc ChangeLog README md4-readme.txt
-	dodoc "${S_DATA}"/q3ut4/readme42.txt
+	dodoc "${S_DATA}"/q3ut4/readme43.txt
 	insinto /usr/share/${PN}/q3ut4
 	doins "${S_DATA}"/q3ut4/*.pk3
 
