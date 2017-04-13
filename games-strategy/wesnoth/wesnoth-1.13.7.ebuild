@@ -54,6 +54,12 @@ pkg_setup() {
 	enewuser ${PN} -1 /bin/bash -1 ${PN}
 }
 
+src_unpack() {
+    unpack ${A}
+    cd "${S}"
+    epatch "${FILESDIR}/${P}-build.patch"
+}
+
 src_prepare() {
 	cmake-utils_src_prepare
 
