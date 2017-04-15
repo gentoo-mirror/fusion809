@@ -13,7 +13,8 @@ if [[ ${PV} == *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/${PN}/qBittorrent.git"
 else
 	MY_P=${P/_}
-	SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.xz"
+	SRC_URI="https://github.com/qbittorrent/qBittorrent/archive/2def21a51bdc396412b4a2eb568f6094989b1604.tar.gz"
+	#SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.xz"
 	KEYWORDS="~amd64 ~arm ~ppc64 ~x86"
 	S=${WORKDIR}/${MY_P}
 fi
@@ -31,6 +32,7 @@ RDEPEND="
 	>=dev-qt/qtsingleapplication-2.6.1_p20130904-r1[qt5,X?]
 	dev-qt/qtxml:5
 	>=net-libs/libtorrent-rasterbar-1.0.6
+	<=net-libs/libtorrent-rasterbar-1.0.11
 	sys-libs/zlib
 	dbus? ( dev-qt/qtdbus:5 )
 	X? (
@@ -42,6 +44,12 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 DOCS=( AUTHORS Changelog CONTRIBUTING.md README.md TODO )
+
+src_unpack() {
+	unpack ${A}
+	mv ${WORKDIR}/qBittorrent-2def21a51bdc396412b4a2eb568f6094989b1604 ${S}
+	cd "${S}"
+}
 
 src_configure() {
 	local mycmakeargs=(
