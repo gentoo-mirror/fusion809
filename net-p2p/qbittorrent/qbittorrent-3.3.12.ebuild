@@ -13,10 +13,11 @@ if [[ ${PV} == *9999 ]]; then
 	EGIT_REPO_URI="https://github.com/${PN}/qBittorrent.git"
 else
 	MY_P=${P/_}
-	SRC_URI="https://github.com/qbittorrent/qBittorrent/archive/2def21a51bdc396412b4a2eb568f6094989b1604.tar.gz"
-	#SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.xz"
-	S=${WORKDIR}/${MY_P}
+	SRC_URI="https://github.com/qbittorrent/qBittorrent/archive/release-${PV}.tar.gz"
+	KEYWORDS="~amd64 ~arm ~ppc64 ~x86"
 fi
+
+PATCHES=( "${FILESDIR}/pull-6648.patch" )
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -44,11 +45,7 @@ DEPEND="${RDEPEND}
 
 DOCS=( AUTHORS Changelog CONTRIBUTING.md README.md TODO )
 
-src_unpack() {
-	unpack ${A}
-	mv ${WORKDIR}/qBittorrent-2def21a51bdc396412b4a2eb568f6094989b1604 ${S}
-	cd "${S}"
-}
+S=${WORKDIR}/qBittorrent-release-${PV}
 
 src_configure() {
 	local mycmakeargs=(
