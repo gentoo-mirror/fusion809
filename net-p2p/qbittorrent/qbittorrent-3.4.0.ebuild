@@ -8,15 +8,8 @@ inherit cmake-utils
 DESCRIPTION="BitTorrent client in C++ and Qt"
 HOMEPAGE="https://www.qbittorrent.org/"
 
-if [[ ${PV} == *9999 ]]; then
-	inherit git-r3
-	EGIT_REPO_URI="https://github.com/${PN}/qBittorrent.git"
-else
-	MY_P=${P/_}
-	SRC_URI="https://github.com/qbittorrent/qBittorrent/archive/2def21a51bdc396412b4a2eb568f6094989b1604.tar.gz"
-	#SRC_URI="mirror://sourceforge/${PN}/${MY_P}.tar.xz"
-	S=${WORKDIR}/${MY_P}
-fi
+SRC_URI="https://github.com/qbittorrent/qBittorrent/archive/2def21a51bdc396412b4a2eb568f6094989b1604.tar.gz"
+S=${WORKDIR}/qBittorrent-2def21a51bdc396412b4a2eb568f6094989b1604
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -43,12 +36,6 @@ DEPEND="${RDEPEND}
 	virtual/pkgconfig"
 
 DOCS=( AUTHORS Changelog CONTRIBUTING.md README.md TODO )
-
-src_unpack() {
-	unpack ${A}
-	mv ${WORKDIR}/qBittorrent-2def21a51bdc396412b4a2eb568f6094989b1604 ${S}
-	cd "${S}"
-}
 
 src_configure() {
 	local mycmakeargs=(
