@@ -17,7 +17,7 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE="pax_kernel"
 
-RDEPEND="!=app-emulation/virtualbox-9999"
+RDEPEND="=app-emulation/virtualbox-bin-${PV}"
 
 S=${WORKDIR}
 
