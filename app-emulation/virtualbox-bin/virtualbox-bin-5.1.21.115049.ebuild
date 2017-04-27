@@ -1,5 +1,7 @@
 # Copyright 1999-2017 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
+# =DvD= @ Gentoo Forum's fix for VirtualBox 5.1.20 issues
+# Per https://forums.gentoo.org/viewtopic-p-8060386.html
 
 EAPI=5
 
