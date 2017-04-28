@@ -10,8 +10,7 @@ if [[ ${PV} == 9999* ]] ; then
 	inherit git-r3
 	EGIT_REPO_URI="https://github.com/vim/vim.git"
 else
-	SRC_URI="https://github.com/vim/vim/archive/v${PV}.tar.gz -> ${P}.tar.gz
-	${FILESDIR}/vim-8.0.0587-gentoo-patches.tar.bz2"
+	SRC_URI="https://github.com/vim/vim/archive/v${PV}.tar.gz -> ${P}.tar.gz"
 	KEYWORDS="*"
 fi
 
@@ -58,6 +57,13 @@ DEPEND="${RDEPEND}
 	nls? ( sys-devel/gettext )
 "
 
+PATCHES=( "$FILESDIR/001_all_vim-6.3-xorg-75816.patch"
+"$FILESDIR/002_all_vim-7.3-apache-83565.patch"
+"$FILESDIR/003_all_vim-7.0-automake-substitutions-93378.patch"
+"$FILESDIR/004_all_vim-7.0-grub-splash-96155.patch"
+"$FILESDIR/005_all_vim_7.1-ada-default-compiler.patch"
+"$FILESDIR/006-vim-8.0-crosscompile.patch" )
+
 pkg_setup() {
 	# people with broken alphabets run into trouble. bug 82186.
 	unset LANG LC_ALL
@@ -69,10 +75,12 @@ pkg_setup() {
 }
 
 src_prepare() {
-	if [[ ${PV} != 9999* ]] ; then
-		# Gentoo patches to fix runtime issues, cross-compile errors, etc
-		eapply "${WORKDIR}"/patches/
-	fi
+    epatch "${FILESDIR}/001_all_vim-6.3-xorg-75816.patch"
+    epatch "${FILESDIR}/002_all_vim-7.3-apache-83565.patch"
+    epatch "${FILESDIR}/003_all_vim-7.0-automake-substitutions-93378.patch"
+    epatch "${FILESDIR}/004_all_vim-7.0-grub-splash-96155.patch"
+    epatch "${FILESDIR}/005_all_vim_7.1-ada-default-compiler.patch"
+    epatch "${FILESDIR}/006-vim-8.0-crosscompile.patch"
 
 	# Fixup a script to use awk instead of nawk
 	sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
