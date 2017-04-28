@@ -15,6 +15,8 @@ else
 	KEYWORDS="*"
 fi
 
+PATCHES=( ${FILESDIR}/vim-8.0.0587-gentoo-patches.tar.bz2 )
+
 DESCRIPTION="Vim, an improved vi-style text editor"
 HOMEPAGE="http://www.vim.org/ https://github.com/vim/vim"
 
