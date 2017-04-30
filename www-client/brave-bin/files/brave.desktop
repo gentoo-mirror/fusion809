@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Brave
+Comment=The Brave web browser
+GenericName=Brave
+Exec=brave %U
+Icon=brave
+Type=Application
+StartupNotify=true
+Categories=Network;WebBrowser;
+MimeType=text/html;text/xml;application/xhtml_xml;image/webp;x-scheme-handler/http;x-scheme-handler/https;x-scheme-handler/ftp;
