@@ -4,10 +4,10 @@ EAPI=5
 
 inherit eutils
 
-S="${WORKDIR}/${PN}-${PN}_${PV}"
+S="${WORKDIR}/${PN}-90d027eb635f"
 
 SRC_URI="\
-	http://foicica.com/hg/${PN}/archive/${PN}_${PV}.zip
+	http://foicica.com/hg/${PN}/archive/90d027eb635f.zip
 	http://foicica.com/scintillua/download/scintillua_3.7.3-1.zip -> scintillua_3.7.3-1.zip \
 	http://foicica.com/hg/bombay/archive/tip.zip -> bombay.zip \
 	http://foicica.com/gtdialog/download/gtdialog_1.3.zip \
@@ -42,7 +42,7 @@ DEPEND="${RDEPEND}
 SLOT="0"
 
 src_unpack() {
-	maindistfile="${PN}_${PV}.zip"
+	maindistfile="90d027eb635f.zip"
 	unpack "${maindistfile}"
 	for distfile in ${A}; do
 		if [ "${distfile}" != "${maindistfile}" ]; then
