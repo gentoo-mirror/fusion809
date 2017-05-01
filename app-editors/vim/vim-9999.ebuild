@@ -118,16 +118,16 @@ src_prepare() {
 
      # conditionally make the manpager.sh script
      if use vim-pager ; then
-         cat <<-END > "${S}"/runtime/macros/manpager.sh
-             #!/bin/sh
-             sed -e 's/\x1B\[[[:digit:]]\+m//g' | col -b | \\
-                     vim \\
-                         -c 'let no_plugin_maps = 1' \\
-                         -c 'set nolist nomod ft=man' \\
-                         -c 'let g:showmarks_enable=0' \\
-                         -c 'runtime! macros/less.vim' -
-             END
-     fi
+     		cat <<-END > "${S}"/runtime/macros/manpager.sh
+			#!/bin/sh
+			sed -e 's/\x1B\[[[:digit:]]\+m//g' | col -b | \\
+					vim \\
+						-c 'let no_plugin_maps = 1' \\
+						-c 'set nolist nomod ft=man ts=8' \\
+						-c 'let g:showmarks_enable=0' \\
+						-c 'runtime! macros/less.vim' -
+			END
+    fi
 
      # Try to avoid sandbox problems. Bug #114475.
      if [[ -d "${S}"/src/po ]] ; then
