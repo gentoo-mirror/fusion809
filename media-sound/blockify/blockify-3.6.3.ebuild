@@ -23,19 +23,19 @@ RDEPEND="dev-python/dbus-python
          media-libs/alsa-oss
          media-sound/pulseaudio
          x11-misc/wmctrl
-		 media-sound/spotify"
+           media-sound/spotify"
 DEPEND="${RDEPEND}"
 
 python_compile_all () {
-	distutils-r1_python_compile_all
+     distutils-r1_python_compile_all
 }
 
 python_install_all() {
-	distutils-r1_python_install_all
-	insinto /usr/share/pixmaps/
-	newins blockify/data/icon-red-512.png blockify.png
+     distutils-r1_python_install_all
+     insinto /usr/share/pixmaps/
+     newins blockify/data/icon-red-512.png blockify.png
 
-	sed -i -e 's/icon\-red\-512\.png/blockify\.png/g' blockify/data/blockify.desktop
-	insinto /usr/share/applications/
-	newins blockify/data/blockify.desktop blockify.desktop
+     sed -i -e 's/icon\-red\-512\.png/blockify\.png/g' blockify/data/blockify.desktop
+     insinto /usr/share/applications/
+     newins blockify/data/blockify.desktop blockify.desktop
 }

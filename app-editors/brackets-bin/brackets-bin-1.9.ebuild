@@ -4,8 +4,8 @@ EAPI=5
 
 DESCRIPTION="open source code editor for web designers and front-end developers"
 HOMEPAGE="http://brackets.io"
-SRC_URI="amd64?	( https://github.com/adobe/brackets/releases/download/release-${PV}/Brackets.Release.${PV}.64-bit.deb )
-	x86?	( https://github.com/adobe/brackets/releases/download/release-${PV}/Brackets.Release.${PV}.32-bit.deb )"
+SRC_URI="amd64?     ( https://github.com/adobe/brackets/releases/download/release-${PV}/Brackets.Release.${PV}.64-bit.deb )
+     x86?     ( https://github.com/adobe/brackets/releases/download/release-${PV}/Brackets.Release.${PV}.32-bit.deb )"
 
 LICENSE="MIT"
 SLOT="0"

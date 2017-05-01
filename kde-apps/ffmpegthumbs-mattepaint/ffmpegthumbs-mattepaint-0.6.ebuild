@@ -13,9 +13,9 @@ KEYWORDS="amd64 x86"
 LICENSE="GPL-2"
 
 DEPEND="
-	kde-apps/dolphin
-	media-video/libav
-	dev-util/cmake
+     kde-apps/dolphin
+     media-video/libav
+     dev-util/cmake
 "
 
 RDEPEND="${DEPEND}"
@@ -23,14 +23,14 @@ RDEPEND="${DEPEND}"
 S=${WORKDIR}/${PN}/KF5/${PN}
 
 src_configure() {
-	mycmakeargs=(
-		-DCMAKE_INSTALL_PREFIX=$(kf5-config --prefix)
-		-DCMAKE_BUILD_TYPE=Release
-		-DKDE_INSTALL_USE_QT_SYS_PATHS=ON
-	)
-	cmake-utils_src_configure
+     mycmakeargs=(
+          -DCMAKE_INSTALL_PREFIX=$(kf5-config --prefix)
+          -DCMAKE_BUILD_TYPE=Release
+          -DKDE_INSTALL_USE_QT_SYS_PATHS=ON
+     )
+     cmake-utils_src_configure
 }
 
 src_install() {
-	cmake-utils_src_install
+     cmake-utils_src_install
 }

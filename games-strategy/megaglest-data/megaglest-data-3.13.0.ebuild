@@ -19,21 +19,21 @@ RDEPEND="~games-strategy/megaglest-${PV}"
 DOCS=( docs/AUTHORS.data.txt docs/CHANGELOG.txt docs/README.txt )
 
 src_configure() {
-	local mycmakeargs=(
-		-DMEGAGLEST_BIN_INSTALL_PATH=/usr/bin
-		-DMEGAGLEST_DATA_INSTALL_PATH=/usr/share/megaglest
-		-DMEGAGLEST_ICON_INSTALL_PATH=/usr/share/pixmaps
-	)
-	cmake-utils_src_configure
+     local mycmakeargs=(
+          -DMEGAGLEST_BIN_INSTALL_PATH=/usr/bin
+          -DMEGAGLEST_DATA_INSTALL_PATH=/usr/share/megaglest
+          -DMEGAGLEST_ICON_INSTALL_PATH=/usr/share/pixmaps
+     )
+     cmake-utils_src_configure
 }
 
 src_compile() {
-	cmake-utils_src_compile
+     cmake-utils_src_compile
 }
 
 src_install() {
-	use doc && HTML_DOCS="docs/glest_factions/"
+     use doc && HTML_DOCS="docs/glest_factions/"
 
-	cmake-utils_src_install
+     cmake-utils_src_install
 }
 

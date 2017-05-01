@@ -12,8 +12,8 @@ HOMEPAGE="http://www.eclipse.org"
 SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-javascript-${RNAME}-${SR}-linux-gtk"
 
 SRC_URI="
-	amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> ${P}-x86_64.tar.gz )
-	x86? ( ${SRC_BASE}.tar.gz&r=1 -> ${P}.tar.gz )
+     amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> ${P}-x86_64.tar.gz )
+     x86? ( ${SRC_BASE}.tar.gz&r=1 -> ${P}.tar.gz )
 "
 
 LICENSE="EPL-1.0"
@@ -22,31 +22,31 @@ KEYWORDS="~amd64"
 IUSE=""
 
 RDEPEND="
-	>=virtual/jdk-1.8
-	x11-libs/gtk+:2
-	dev-java/java-config
+     >=virtual/jdk-1.8
+     x11-libs/gtk+:2
+     dev-java/java-config
 "
 
 S=${WORKDIR}/eclipse
 
 src_install() {
-	local dest=/opt/${PN}-${SLOT}
+     local dest=/opt/${PN}-${SLOT}
 
-	insinto ${dest}
-	doins -r features icon.xpm plugins artifacts.xml p2 eclipse.ini configuration dropins
+     insinto ${dest}
+     doins -r features icon.xpm plugins artifacts.xml p2 eclipse.ini configuration dropins
 
-	exeinto ${dest}
-	doexe eclipse
+     exeinto ${dest}
+     doexe eclipse
 
-	dohtml -r readme/*
+     dohtml -r readme/*
 
-	cp "${FILESDIR}"/eclipserc-bin-${SLOT} "${T}" || die
-	cp "${FILESDIR}"/eclipse-bin-${SLOT} "${T}" || die
-	sed "s@%SLOT%@${SLOT}@" -i "${T}"/eclipse{,rc}-bin-${SLOT} || die
+     cp "${FILESDIR}"/eclipserc-bin-${SLOT} "${T}" || die
+     cp "${FILESDIR}"/eclipse-bin-${SLOT} "${T}" || die
+     sed "s@%SLOT%@${SLOT}@" -i "${T}"/eclipse{,rc}-bin-${SLOT} || die
 
-	insinto /etc
-	newins "${T}"/eclipserc-bin-${SLOT} eclipserc-bin-${SLOT}
+     insinto /etc
+     newins "${T}"/eclipserc-bin-${SLOT} eclipserc-bin-${SLOT}
 
-	newbin "${T}"/eclipse-bin-${SLOT} eclipse-javascript-${SLOT}
-	make_desktop_entry "eclipse-javascript-${SLOT}" "Eclipse JavaScript IDE" "${dest}/icon.xpm" "Development;IDE"
+     newbin "${T}"/eclipse-bin-${SLOT} eclipse-javascript-${SLOT}
+     make_desktop_entry "eclipse-javascript-${SLOT}" "Eclipse JavaScript IDE" "${dest}/icon.xpm" "Development;IDE"
 }
