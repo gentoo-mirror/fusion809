@@ -23,9 +23,9 @@ IUSE="X acl cscope debug gpm lua luajit minimal nls perl python racket ruby seli
 REQUIRED_USE="
      luajit? ( lua )
      python? (
-          || ( $(python_gen_useflags '*') )
-          ?? ( $(python_gen_useflags 'python2*') )
-          ?? ( $(python_gen_useflags 'python3*') )
+         || ( $(python_gen_useflags '*') )
+         ?? ( $(python_gen_useflags 'python2*') )
+         ?? ( $(python_gen_useflags 'python3*') )
      )
 "
 
@@ -37,12 +37,12 @@ RDEPEND="
      cscope? ( dev-util/cscope )
      gpm? ( >=sys-libs/gpm-1.19.3 )
      lua? (
-          luajit? ( dev-lang/luajit:2= )
-          !luajit? ( dev-lang/lua:0[deprecated] )
+         luajit? ( dev-lang/luajit:2= )
+         !luajit? ( dev-lang/lua:0[deprecated] )
      )
      !minimal? (
-          ~app-editors/vim-core-${PV}
-          dev-util/ctags
+         ~app-editors/vim-core-${PV}
+         dev-util/ctags
      )
      perl? ( dev-lang/perl:= )
      python? ( ${PYTHON_DEPS} )
@@ -65,13 +65,13 @@ PATCHES=( "$FILESDIR/001_all_vim-6.3-xorg-75816.patch"
 "$FILESDIR/006-vim-8.0-crosscompile.patch" )
 
 pkg_setup() {
-     # people with broken alphabets run into trouble. bug 82186.
-     unset LANG LC_ALL
-     export LC_COLLATE="C"
+    # people with broken alphabets run into trouble. bug 82186.
+    unset LANG LC_ALL
+    export LC_COLLATE="C"
 
-     # Gnome sandbox silliness. bug #114475.
-     mkdir -p "${T}"/home
-     export HOME="${T}"/home
+    # Gnome sandbox silliness. bug #114475.
+    mkdir -p "${T}"/home
+    export HOME="${T}"/home
 }
 
 src_prepare() {
@@ -82,65 +82,65 @@ src_prepare() {
     epatch "${FILESDIR}/005_all_vim_7.1-ada-default-compiler.patch"
     epatch "${FILESDIR}/006-vim-8.0-crosscompile.patch"
 
-     # Fixup a script to use awk instead of nawk
-     sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
-          || die "mve.awk sed failed"
+    # Fixup a script to use awk instead of nawk
+    sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
+        || die "mve.awk sed failed"
 
-     # Read vimrc and gvimrc from /etc/vim
-     echo '#define SYS_VIMRC_FILE "'${EPREFIX}'/etc/vim/vimrc"' >> "${S}"/src/feature.h
-     echo '#define SYS_GVIMRC_FILE "'${EPREFIX}'/etc/vim/gvimrc"' >> "${S}"/src/feature.h
+    # Read vimrc and gvimrc from /etc/vim
+    echo '#define SYS_VIMRC_FILE "'${EPREFIX}'/etc/vim/vimrc"' >> "${S}"/src/feature.h
+    echo '#define SYS_GVIMRC_FILE "'${EPREFIX}'/etc/vim/gvimrc"' >> "${S}"/src/feature.h
 
-     # Use exuberant ctags which installs as /usr/bin/exuberant-ctags.
-     # Hopefully this pattern won't break for a while at least.
-     # This fixes bug 29398 (27 Sep 2003 agriffis)
-     sed -i 's/\<ctags\("\| [-*.]\)/exuberant-&/g' \
-          "${S}"/runtime/doc/syntax.txt \
-          "${S}"/runtime/doc/tagsrch.txt \
-          "${S}"/runtime/doc/usr_29.txt \
-          "${S}"/runtime/menu.vim \
-          "${S}"/src/configure.ac || die 'sed failed'
+    # Use exuberant ctags which installs as /usr/bin/exuberant-ctags.
+    # Hopefully this pattern won't break for a while at least.
+    # This fixes bug 29398 (27 Sep 2003 agriffis)
+    sed -i 's/\<ctags\("\| [-*.]\)/exuberant-&/g' \
+        "${S}"/runtime/doc/syntax.txt \
+        "${S}"/runtime/doc/tagsrch.txt \
+        "${S}"/runtime/doc/usr_29.txt \
+        "${S}"/runtime/menu.vim \
+        "${S}"/src/configure.ac || die 'sed failed'
 
-     # Don't be fooled by /usr/include/libc.h.  When found, vim thinks
-     # this is NeXT, but it's actually just a file in dev-libs/9libs
-     # This fixes bug 43885 (20 Mar 2004 agriffis)
-     sed -i 's/ libc\.h / /' "${S}"/src/configure.ac || die 'sed failed'
+    # Don't be fooled by /usr/include/libc.h.  When found, vim thinks
+    # this is NeXT, but it's actually just a file in dev-libs/9libs
+    # This fixes bug 43885 (20 Mar 2004 agriffis)
+    sed -i 's/ libc\.h / /' "${S}"/src/configure.ac || die 'sed failed'
 
-     # gcc on sparc32 has this, uhm, interesting problem with detecting EOF
-     # correctly. To avoid some really entertaining error messages about stuff
-     # which isn't even in the source file being invalid, we'll do some trickery
-     # to make the error never occur. bug 66162 (02 October 2004 ciaranm)
-     find "${S}" -name '*.c' | while read c ; do echo >> "$c" ; done
+    # gcc on sparc32 has this, uhm, interesting problem with detecting EOF
+    # correctly. To avoid some really entertaining error messages about stuff
+    # which isn't even in the source file being invalid, we'll do some trickery
+    # to make the error never occur. bug 66162 (02 October 2004 ciaranm)
+    find "${S}" -name '*.c' | while read c ; do echo >> "$c" ; done
 
-     # conditionally make the manpager.sh script
-     if use vim-pager ; then
-          cat <<-END > "${S}"/runtime/macros/manpager.sh
-               #!/bin/sh
-               sed -e 's/\x1B\[[[:digit:]]\+m//g' | col -b | \\
-                         vim \\
-                              -c 'let no_plugin_maps = 1' \\
-                              -c 'set nolist nomod ft=man ts=8' \\
-                              -c 'let g:showmarks_enable=0' \\
-                              -c 'runtime! macros/less.vim' -
-               END
-     fi
+    # conditionally make the manpager.sh script
+    if use vim-pager ; then
+		cat <<-END > "${S}"/runtime/macros/manpager.sh
+			#!/bin/sh
+			sed -e 's/\x1B\[[[:digit:]]\+m//g' | col -b | \\
+					vim \\
+						-c 'let no_plugin_maps = 1' \\
+						-c 'set nolist nomod ft=man ts=8' \\
+						-c 'let g:showmarks_enable=0' \\
+						-c 'runtime! macros/less.vim' -
+			END
+    fi
 
-     # Try to avoid sandbox problems. Bug #114475.
-     if [[ -d "${S}"/src/po ]] ; then
-          sed -i '/-S check.vim/s,..VIM.,ln -s $(VIM) testvim \; ./testvim -X,' \
-               "${S}"/src/po/Makefile
-     fi
+    # Try to avoid sandbox problems. Bug #114475.
+    if [[ -d "${S}"/src/po ]] ; then
+         sed -i '/-S check.vim/s,..VIM.,ln -s $(VIM) testvim \; ./testvim -X,' \
+            "${S}"/src/po/Makefile
+    fi
 
-     if version_is_at_least 7.3.122 ; then
-          cp "${S}"/src/config.mk.dist "${S}"/src/auto/config.mk
-     fi
+    if version_is_at_least 7.3.122 ; then
+         cp "${S}"/src/config.mk.dist "${S}"/src/auto/config.mk
+    fi
 
-     # Bug #378107 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
-     if version_is_at_least 7.3 ; then
-          sed -i "s:\\\$(PERLLIB)/ExtUtils/xsubpp:${EPREFIX}/usr/bin/xsubpp:"     \
-               "${S}"/src/Makefile || die 'sed for ExtUtils-ParseXS failed'
-     fi
+    # Bug #378107 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
+    if version_is_at_least 7.3 ; then
+         sed -i "s:\\\$(PERLLIB)/ExtUtils/xsubpp:${EPREFIX}/usr/bin/xsubpp:"     \
+             "${S}"/src/Makefile || die 'sed for ExtUtils-ParseXS failed'
+    fi
 
-     eapply_user
+    eapply_user
 }
 
 src_configure() {
@@ -167,80 +167,80 @@ src_configure() {
      # This should fix a sandbox violation (see bug 24447). The hvc
      # things are for ppc64, see bug 86433.
      for file in /dev/pty/s* /dev/console /dev/hvc/* /dev/hvc* ; do
-          [[ -e ${file} ]] && addwrite $file
+         [[ -e ${file} ]] && addwrite $file
      done
 
      if use minimal ; then
-          myconf=(
-               --with-features=tiny
-               --disable-nls
-               --disable-multibyte
-               --disable-acl
-               --enable-gui=no
-               --without-x
-               --disable-darwin
-               --disable-luainterp
-               --disable-perlinterp
-               --disable-pythoninterp
-               --disable-mzschemeinterp
-               --disable-rubyinterp
-               --disable-selinux
-               --disable-tclinterp
-               --disable-gpm
-          )
+         myconf=(
+             --with-features=tiny
+             --disable-nls
+             --disable-multibyte
+             --disable-acl
+             --enable-gui=no
+             --without-x
+             --disable-darwin
+             --disable-luainterp
+             --disable-perlinterp
+             --disable-pythoninterp
+             --disable-mzschemeinterp
+             --disable-rubyinterp
+             --disable-selinux
+             --disable-tclinterp
+             --disable-gpm
+         )
      else
-          use debug && append-flags "-DDEBUG"
+         use debug && append-flags "-DDEBUG"
 
-          myconf=(
-               --with-features=huge
-               --enable-multibyte
-               $(use_enable acl)
-               $(use_enable cscope)
-               $(use_enable gpm)
-               $(use_enable lua luainterp)
-               $(usex lua "--with-lua-prefix=${EPREFIX}/usr" "")
-               $(use_with luajit)
-               $(use_enable nls)
-               $(use_enable perl perlinterp)
-               $(use_enable racket mzschemeinterp)
-               $(use_enable ruby rubyinterp)
-               $(use_enable selinux)
-               $(use_enable tcl tclinterp)
-          )
+         myconf=(
+             --with-features=huge
+             --enable-multibyte
+             $(use_enable acl)
+             $(use_enable cscope)
+             $(use_enable gpm)
+             $(use_enable lua luainterp)
+             $(usex lua "--with-lua-prefix=${EPREFIX}/usr" "")
+             $(use_with luajit)
+             $(use_enable nls)
+             $(use_enable perl perlinterp)
+             $(use_enable racket mzschemeinterp)
+             $(use_enable ruby rubyinterp)
+             $(use_enable selinux)
+             $(use_enable tcl tclinterp)
+         )
 
-          if use python ; then
-               py_add_interp() {
-                    local v
+         if use python ; then
+             py_add_interp() {
+                 local v
 
-                    [[ ${EPYTHON} == python3* ]] && v=3
-                    myconf+=(
-                         --enable-python${v}interp
-                         vi_cv_path_python${v}="${PYTHON}"
-                    )
-               }
+                 [[ ${EPYTHON} == python3* ]] && v=3
+                 myconf+=(
+                     --enable-python${v}interp
+                     vi_cv_path_python${v}="${PYTHON}"
+                 )
+             }
 
-               python_foreach_impl py_add_interp
-          else
-               myconf+=(
-                    --disable-pythoninterp
-                    --disable-python3interp
-               )
-          fi
+             python_foreach_impl py_add_interp
+         else
+             myconf+=(
+                 --disable-pythoninterp
+                 --disable-python3interp
+             )
+         fi
 
-          # --with-features=huge forces on cscope even if we --disable it. We need
-          # to sed this out to avoid screwiness. (1 Sep 2004 ciaranm)
-          if ! use cscope ; then
-               sed -i '/# define FEAT_CSCOPE/d' src/feature.h || \
-                    die "couldn't disable cscope"
-          fi
+         # --with-features=huge forces on cscope even if we --disable it. We need
+         # to sed this out to avoid screwiness. (1 Sep 2004 ciaranm)
+         if ! use cscope ; then
+             sed -i '/# define FEAT_CSCOPE/d' src/feature.h || \
+                 die "couldn't disable cscope"
+         fi
 
-          # don't test USE=X here ... see bug #19115
-          # but need to provide a way to link against X ... see bug #20093
-          myconf+=(
-               --enable-gui=no
-               --disable-darwin
-               $(use_with X x)
-          )
+         # don't test USE=X here ... see bug #19115
+         # but need to provide a way to link against X ... see bug #20093
+         myconf+=(
+             --enable-gui=no
+             --disable-darwin
+             $(use_with X x)
+         )
      fi
 
      # let package manager strip binaries
@@ -250,8 +250,8 @@ src_configure() {
      use prefix && myconf+=( --without-local-dir )
 
      econf \
-          --with-modified-by=Gentoo-${PVR} \
-          "${myconf[@]}"
+         --with-modified-by=Gentoo-${PVR} \
+         "${myconf[@]}"
 }
 
 src_compile() {
@@ -289,22 +289,22 @@ update_vim_symlinks() {
 
      # Make or remove convenience symlink, vim -> gvim
      if [[ -f "${EROOT}"/usr/bin/gvim ]]; then
-          ln -s gvim "${EROOT}"/usr/bin/vim 2>/dev/null
+         ln -s gvim "${EROOT}"/usr/bin/vim 2>/dev/null
      elif [[ -L "${EROOT}"/usr/bin/vim && ! -f "${EROOT}"/usr/bin/vim ]]; then
-          rm "${EROOT}"/usr/bin/vim
+         rm "${EROOT}"/usr/bin/vim
      fi
 
      # Make or remove convenience symlinks to vim
      if [[ -f "${EROOT}"/usr/bin/vim ]]; then
-          for f in ${syms}; do
-               ln -s vim "${EROOT}"/usr/bin/${f} 2>/dev/null
-          done
+         for f in ${syms}; do
+             ln -s vim "${EROOT}"/usr/bin/${f} 2>/dev/null
+         done
      else
-          for f in ${syms}; do
-               if [[ -L "${EROOT}"/usr/bin/${f} && ! -f "${EROOT}"/usr/bin/${f} ]]; then
-                    rm -f "${EROOT}"/usr/bin/${f}
-               fi
-          done
+         for f in ${syms}; do
+             if [[ -L "${EROOT}"/usr/bin/${f} && ! -f "${EROOT}"/usr/bin/${f} ]]; then
+                 rm -f "${EROOT}"/usr/bin/${f}
+             fi
+         done
      fi
 
      # This will still break if you merge then remove the vi package,
@@ -316,17 +316,17 @@ src_install() {
      local vimfiles=/usr/share/vim/vim${VIM_VERSION/.}
 
      # Note: Do not install symlinks for 'vi', 'ex', or 'view', as these are
-     #       managed by eselect-vi
+     #      managed by eselect-vi
      dobin src/vim
      dosym vim /usr/bin/vimdiff
      dosym vim /usr/bin/rvim
      dosym vim /usr/bin/rview
      if use vim-pager ; then
-          dosym ${vimfiles}/macros/less.sh /usr/bin/vimpager
-          dosym ${vimfiles}/macros/manpager.sh /usr/bin/vimmanpager
-          insinto ${vimfiles}/macros
-          doins runtime/macros/manpager.sh
-          fperms a+x ${vimfiles}/macros/manpager.sh
+         dosym ${vimfiles}/macros/less.sh /usr/bin/vimpager
+         dosym ${vimfiles}/macros/manpager.sh /usr/bin/vimmanpager
+         insinto ${vimfiles}/macros
+         doins runtime/macros/manpager.sh
+         fperms a+x ${vimfiles}/macros/manpager.sh
      fi
 
      newbashcomp "${FILESDIR}"/${PN}-completion ${PN}
