@@ -1,9 +1,4 @@
-# Copyright 2014-2016 Julian Ospald <hasufell@posteo.de>
 # Distributed under the terms of the GNU General Public License v2
-# $Id$
-
-# google-breakpad
-# TODO: fribidi, libvorbis static
 
 EAPI=5
 VIRTUALX_REQUIRED="manual"
