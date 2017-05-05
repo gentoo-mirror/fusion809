@@ -4,12 +4,12 @@ EAPI=6
 
 inherit eutils pax-utils
 
-RELEASE="6eaebe3b9c70406d67c97779468c324a7a95db0e"
+RELEASE="f6868fce3eeb16663840eb82123369dec6077a9b"
 DESCRIPTION="Multiplatform Visual Studio Code from Microsoft"
 HOMEPAGE="https://code.visualstudio.com"
 SRC_URI="
-     x86? ( https://az764295.vo.msecnd.net/stable/${RELEASE}/code-stable-code_${PV}-1492075152_i386.tar.gz -> ${P}_i386.tar.gz )
-     amd64? ( https://az764295.vo.msecnd.net/stable/${RELEASE}/code-stable-code_${PV}-1492070517_amd64.tar.gz -> ${P}_amd64.tar.gz )
+     x86? ( https://az764295.vo.msecnd.net/stable/${RELEASE}/code-stable-code_${PV}-1493932947_i386.tar.gz -> ${P}_i386.tar.gz )
+     amd64? ( https://az764295.vo.msecnd.net/stable/${RELEASE}/code-stable-code_${PV}-1493934083_amd64.tar.gz -> ${P}_amd64.tar.gz )
      "
 RESTRICT="mirror strip"
 
