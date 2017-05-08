@@ -50,7 +50,7 @@ src_configure() {
 		--x-libraries=/usr/$(get_libdir) \
 		--enable-xrandr
 	# The following line fixes bug 594670 (https://bugs.gentoo.org/show_bug.cgi?id=594670)
-    sed -i -e 's/#include <cmath>/#include <cmath>\n#include <math.h>/g' src/drivers/olethros/geometry.cpp
+    sed -i -e 's/#include <cmath>/#include <math.h>/g' src/drivers/olethros/geometry.cpp
 }
 
 src_compile() {
