@@ -4,7 +4,7 @@
 EAPI=6
 inherit autotools eutils multilib
 
-MY_PV=1.3.8-test1
+MY_PV="1.3.8-test1"
 MY_P=$PN-${MY_PV}
 DESCRIPTION="The Open Racing Car Simulator"
 HOMEPAGE="http://torcs.sourceforge.net/"
@@ -12,7 +12,6 @@ SRC_URI="mirror://sourceforge/torcs/${MY_P}.tar.bz2"
 
 LICENSE="GPL-2 FreeArt"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
 IUSE=""
 
 RDEPEND="media-libs/freealut
