@@ -10,7 +10,8 @@ SRC_URI="mirror://sourceforge/speed-dreams/${PN}-src-base-${PV}-r$REVISION.tar.x
 
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~x86"
+KEYWORDS=""
+#"~amd64 ~x86"
 IUSE="xrandr"
 
 RDEPEND="virtual/opengl
@@ -22,6 +23,11 @@ RDEPEND="virtual/opengl
 	sys-libs/zlib
 	x11-libs/libX11
 	x11-libs/libXxf86vm
+	media-libs/libogg
+	media-libs/libsdl2
+	media-libs/freetype
+	net-misc/curl
+	virtual/jpeg
 	xrandr? ( x11-libs/libXrandr )"
 DEPEND="${RDEPEND}
     dev-games/openscenegraph
