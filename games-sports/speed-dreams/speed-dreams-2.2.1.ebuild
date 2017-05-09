@@ -1,8 +1,7 @@
-# Copyright 1999-2016 Gentoo Foundation
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-inherit autotools eutils versionator
+inherit cmake-utils autotools eutils versionator
 
 REVISION="6404"
 DESCRIPTION="A fork of the famous open racing car simulator TORCS"
@@ -25,6 +24,7 @@ RDEPEND="virtual/opengl
 	x11-libs/libXxf86vm
 	xrandr? ( x11-libs/libXrandr )"
 DEPEND="${RDEPEND}
+    dev-games/openscenegraph
 	>=media-libs/plib-1.8.3
 	x11-libs/libICE
 	x11-libs/libSM
@@ -46,40 +46,34 @@ PATCHES=(
 )
 
 src_prepare() {
-	default
-
 	# https://sourceforge.net/apps/trac/speed-dreams/ticket/111
 	MAKEOPTS="${MAKEOPTS} -j1"
 
-#	sed -i \
-#		-e '/ADDCFLAGS/s: -O2::' \
-#		configure.in || die
-#	sed -i \
-#		-e '/COPYING/s:=.*:= \\:' \
-#		Makefile || die
-	sed -i \
-		-e '/LDFLAGS/s:-L/usr/lib::' \
-		-e "/^datadir/s:=.*:= /usr/share/games/${PN}:" \
-		Make-config.in || die
-
-	eautoreconf
+    cmake-utils_src_prepare
 }
 
 src_configure() {
-	addpredict $(echo /dev/snd/controlC? | sed 's/ /:/g')
-	[[ -e /dev/dsp ]] && addpredict /dev/dsp
-	econf \
-		--prefix=/usr \
-		--bindir=/usr/bin \
-		$(use_enable xrandr)
+#	addpredict $(echo /dev/snd/controlC? | sed 's/ /:/g')
+#	[[ -e /dev/dsp ]] && addpredict /dev/dsp
+#	econf \
+#		--prefix=/usr \
+#		--bindir=/usr/bin \
+#		$(use_enable xrandr)
+    mkdir $D/etc/speed-dreams
+	local mycmakeargs=(
+		-DCMAKE_BUILD_TYPEE=Release
+		-DRELEASE_COMPILE_FLAGS=""
+		-DCMAKE_SKIP_RPATH=ON
+		-SD_LOCALDIR:STRING=/etc/speed-dreams
+	)
+
+	cmake-utils_src_configure
 }
 
 src_install() {
 	emake DESTDIR="${D}" install datainstall
 
-	find "${D}" -name Makefile -exec rm -f {} +
-
-	dodoc CHANGES README TODO
+	dodoc CHANGES.txt README.txt
 
 	newicon icon.svg ${PN}.svg
 	make_desktop_entry ${PN} "Speed Dreams"

@@ -68,7 +68,7 @@ src_configure() {
 }
 
 src_install() {
-	cmake-utils_src_install
+
 	dodoc ChangeLog.md
 
 	newenvd "${FILESDIR}/${PN}.envd" 99${PN}
