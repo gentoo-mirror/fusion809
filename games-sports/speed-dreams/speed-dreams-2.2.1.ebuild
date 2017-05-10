@@ -65,12 +65,11 @@ src_configure() {
 #		--prefix=/usr \
 #		--bindir=/usr/bin \
 #		$(use_enable xrandr)
-    mkdir $D/etc/speed-dreams
 	local mycmakeargs=(
 		-DCMAKE_BUILD_TYPEE=Release
 		-DRELEASE_COMPILE_FLAGS=""
 		-DCMAKE_SKIP_RPATH=ON
-		-SD_LOCALDIR:STRING=/etc/speed-dreams
+		-SD_LOCALDIR:STRING=$HOME/.speed-dreams
 	)
 
 	cmake-utils_src_configure
