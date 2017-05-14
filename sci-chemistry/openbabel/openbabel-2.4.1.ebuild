@@ -57,6 +57,7 @@ src_configure() {
 		-DOPENBABEL_USE_SYSTEM_INCHI=ON
 		$(cmake-utils_use_enable openmp OPENMP)
 		$(cmake-utils_use wxwidgets BUILD_GUI)
+		-Wno-dev
 	)
 
 	cmake-utils_src_configure
