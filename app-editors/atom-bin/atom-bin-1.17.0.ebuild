@@ -47,7 +47,7 @@ QA_PRESTRIPPED="
      /usr/share/${MY_PN}/libnotify.so.4
      /usr/share/${MY_PN}/libchromiumcontent.so
      /usr/share/${MY_PN}/libgcrypt.so.11
-     /usr/share/${MY_PN}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux"
+"
 
 S="${WORKDIR}/${MY_PN}-${PV}-amd64"
 
@@ -88,7 +88,6 @@ src_install() {
      fi
      fperms +x /usr/share/${MY_PN}/resources/app/apm/bin/apm
      fperms +x /usr/share/${MY_PN}/resources/app/apm/node_modules/npm/bin/node-gyp-bin/node-gyp
-     fperms +x /usr/share/${MY_PN}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux
      
      insinto /usr/share/applications
      newins ${FILESDIR}/atom.desktop atom.desktop
