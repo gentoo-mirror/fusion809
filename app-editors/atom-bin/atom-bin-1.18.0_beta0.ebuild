@@ -25,7 +25,7 @@ DEPEND="${PYTHON_DEPS}
      media-fonts/inconsolata
      !!dev-util/atom-shell
      !dev-util/apm
-     !=app-editors/atom-${PN}"
+     !=app-editors/atom-${PV}"
 
 RDEPEND="${DEPEND}
      x11-libs/gtk+:2
