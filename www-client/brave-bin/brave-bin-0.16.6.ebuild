@@ -5,7 +5,7 @@ MY_PN=${PN/-bin/}
 
 DESCRIPTION="Brave web browser for laptops and desktops (binary)"
 HOMEPAGE="https://www.brave.com"
-SRC_URI="https://www.github.com/${MY_PN}/browser-laptop/releases/download/v${PV}dev/Brave.tar.bz2-> Brave-${PV}.tar.bz2"
+SRC_URI="https://www.github.com/${MY_PN}/browser-laptop/releases/download/v${PV}dev/Brave.tar.bz2 -> Brave-${PV}.tar.bz2"
 
 KEYWORDS="~amd64 ~x86"
 
