@@ -25,12 +25,14 @@ src_install() {
     cp -R "${WORKDIR}/opt" "${D}" || die "install failed!"
     dosym /opt/chemaxon/marvinsuite/bin/cxcalc /usr/bin/cxcalc
     dosym /opt/chemaxon/marvinsuite/bin/cxtrain /usr/bin/cxtrain
+    dosym /opt/chemaxon/marvinsuite/LicenseManager /usr/bin/lmanager
     dosym /opt/chemaxon/marvinsuite/bin/molconvert /usr/bin/molconvert
     dosym /opt/chemaxon/marvinsuite/bin/msketch /usr/bin/msketch
     dosym /opt/chemaxon/marvinsuite/bin/mview /usr/bin/mview
-    dosym /opt/chemaxon/marvinsuite/LicenseManager /usr/bin/lmanager
-    doicon "${D}/opt/chemaxon/marvinsuite/.install4j/MarvinView.png"
+    doicon "${D}/opt/chemaxon/marvinsuite/.install4j/LicenseManager.png"
     doicon "${D}/opt/chemaxon/marvinsuite/.install4j/MarvinSketch.png"
-    make_desktop_entry mview MarvinView MarvinView "Education;Chemistry;Science;"
+    doicon "${D}/opt/chemaxon/marvinsuite/.install4j/MarvinView.png"
+    make_desktop_entry lmanager LicenseManager LicenseManager "Education;Chemistry;Science;"
     make_desktop_entry msketch MarvinSketch MarvinSketch "Education;Chemistry;Science;"
+    make_desktop_entry mview MarvinView MarvinView "Education;Chemistry;Science;"
 }
