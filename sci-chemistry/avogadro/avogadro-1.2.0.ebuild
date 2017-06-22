@@ -12,7 +12,7 @@ HOMEPAGE="http://avogadro.openmolecules.net/"
 SRC_URI="mirror://sourceforge/project/${PN}/${PN}/${PV}/${P}.tar.gz"
 LICENSE="GPL-2"
 SLOT="0"
-KEYWORDS="~amd64 ~arm ~x86"
+KEYWORDS=""
 IUSE="+glsl python cpu_flags_x86_sse2 test"
 REQUIRED_USE="python? ( ${PYTHON_REQUIRED_USE} )"
 
