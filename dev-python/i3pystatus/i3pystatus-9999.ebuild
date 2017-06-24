@@ -7,8 +7,7 @@ inherit distutils-r1 git-r3
 
 DESCRIPTION="A complete replacement for i3status"
 HOMEPAGE="https://github.com/fusion809/i3pystatus"
-EGIT_REPO_URI=( {https,git}://github.com/facetoe/${PN}.git )
-EGIT_BRANCH="weathercom_locale"
+EGIT_REPO_URI=( git://github.com/enkore/${PN}.git )
 LICENSE="MIT"
 SLOT="0"
 KEYWORDS=""
