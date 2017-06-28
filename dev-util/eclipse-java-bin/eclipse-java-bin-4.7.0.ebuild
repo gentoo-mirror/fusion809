@@ -4,8 +4,12 @@ EAPI=6
 
 inherit eutils versionator
 
-RNAME="neon"
+RNAME="oxygen"
 SR=$(get_version_component_range 3 $PV)
+if [[ $SR == "0" ]]; then
+    SR="R"
+fi
+
 DESCRIPTION="Eclipse IDE for Java"
 HOMEPAGE="http://www.eclipse.org"
 
@@ -17,7 +21,7 @@ SRC_URI="
 "
 
 LICENSE="EPL-1.0"
-SLOT="4.6"
+SLOT="4.7"
 KEYWORDS="~amd64"
 IUSE=""
 

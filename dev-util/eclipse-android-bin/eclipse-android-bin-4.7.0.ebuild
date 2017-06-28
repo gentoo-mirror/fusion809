@@ -4,12 +4,16 @@ EAPI=6
 
 inherit eutils versionator
 
-RNAME="neon"
+RNAME="oxygen"
 SR=$(get_version_component_range 3 $PV)
-DESCRIPTION="Eclipse IDE for PHP"
+if [[ $SR == "0" ]]; then
+    SR="R"
+fi
+
+DESCRIPTION="Eclipse IDE for Android"
 HOMEPAGE="http://www.eclipse.org"
 
-SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-php-${RNAME}-${SR}-linux-gtk"
+SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-android-${RNAME}-${SR}-incubation-linux-gtk"
 
 SRC_URI="
      amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> ${P}-x86_64.tar.gz )
@@ -17,7 +21,7 @@ SRC_URI="
 "
 
 LICENSE="EPL-1.0"
-SLOT="4.6"
+SLOT="4.7"
 KEYWORDS="~amd64"
 IUSE=""
 
@@ -47,7 +51,7 @@ src_install() {
      insinto /etc
      newins "${T}"/eclipserc-bin-${SLOT} eclipserc-bin-${SLOT}
 
-     newbin "${T}"/eclipse-bin-${SLOT} eclipse-php-${SLOT}
-     make_desktop_entry "eclipse-php-${SLOT}" "Eclipse PHP IDE" "${dest}/icon.xpm" "Development;IDE"
+     newbin "${T}"/eclipse-bin-${SLOT} eclipse-android-${SLOT}
+     make_desktop_entry "eclipse-android-${SLOT}" "Eclipse Android IDE" "${dest}/icon.xpm" "Development;IDE"
 
 }
