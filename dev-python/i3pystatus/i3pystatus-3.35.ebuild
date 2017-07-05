@@ -2,7 +2,7 @@
 
 EAPI=6
 
-PYTHON_COMPAT=( python2_7 python3_4 )
+PYTHON_COMPAT=( python3_4 python3_5 python3_6 )
 inherit distutils-r1
 
 DESCRIPTION="A complete replacement for i3status"
