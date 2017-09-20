@@ -62,7 +62,8 @@ PATCHES=( "$FILESDIR/001_all_vim-6.3-xorg-75816.patch"
 "$FILESDIR/003_all_vim-7.0-automake-substitutions-93378.patch"
 "$FILESDIR/004_all_vim-7.0-grub-splash-96155.patch"
 "$FILESDIR/005_all_vim_7.1-ada-default-compiler.patch"
-"$FILESDIR/006-vim-8.0-crosscompile.patch" )
+"$FILESDIR/006-vim-8.0-crosscompile.patch"
+"$FILESDIR/terminal-add.patch" )
 
 pkg_setup() {
     # people with broken alphabets run into trouble. bug 82186.
@@ -81,6 +82,7 @@ src_prepare() {
     epatch "${FILESDIR}/004_all_vim-7.0-grub-splash-96155.patch"
     epatch "${FILESDIR}/005_all_vim_7.1-ada-default-compiler.patch"
     epatch "${FILESDIR}/006-vim-8.0-crosscompile.patch"
+    epatch "${FILESDIR}/terminal-add.patch"
 
     # Fixup a script to use awk instead of nawk
     sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
@@ -353,4 +355,3 @@ pkg_postrm() {
      # Make convenience symlinks
      update_vim_symlinks
 }
-
