@@ -4,11 +4,12 @@ EAPI=5
 
 inherit eutils
 
-S="${WORKDIR}/${PN}-90d027eb635f"
+_COMMIT="49292c42ef3f"
+S="${WORKDIR}/${PN}-${_COMMIT}"
 
 SRC_URI="\
-     http://foicica.com/hg/${PN}/archive/90d027eb635f.zip
-     http://foicica.com/scintillua/download/scintillua_3.7.3-1.zip -> scintillua_3.7.3-1.zip \
+     http://foicica.com/hg/${PN}/archive/${_COMMIT}.zip
+     http://foicica.com/scintillua/download/scintillua_3.7.5-1.zip -> scintillua_3.7.5-1.zip \
      http://foicica.com/hg/bombay/archive/tip.zip -> bombay.zip \
      http://foicica.com/gtdialog/download/gtdialog_1.3.zip \
      http://foicica.com/lspawn/download/lspawn_1.5.zip \
@@ -42,7 +43,7 @@ DEPEND="${RDEPEND}
 SLOT="0"
 
 src_unpack() {
-     maindistfile="90d027eb635f.zip"
+     maindistfile="${_COMMIT}.zip"
      unpack "${maindistfile}"
      for distfile in ${A}; do
           if [ "${distfile}" != "${maindistfile}" ]; then
