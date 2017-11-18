@@ -45,7 +45,7 @@ src_prepare() {
 
 src_compile() {
      emake $(usex tools "all" "") $(usex debug "" "DEBUG=false")
-     emake VERSION=${MY_PV} docs man-page
+     emake VERSION=${MY_PV} man-page
 }
 
 src_install()
@@ -54,7 +54,7 @@ src_install()
           prefix=/usr \
           libdir="/usr/$(get_libdir)" \
           DESTDIR="${D}" \
-          $(usex tools "install-all" "install") install-linux-scripts install-man-page
+          $(usex tools "install") install-linux-scripts install-man-page
      emake \
           datadir="/usr/share" \
           DESTDIR="${D}" install-linux-mime install-linux-icons
@@ -74,21 +74,6 @@ src_install()
      # desktop menu
      insinto /etc/xdg/menus/applications-merged
      doins "${FILESDIR}"/games-${PN}.menu
-
-     # docs
-     dodoc "${FILESDIR}"/README.gentoo
-     if [[ -n "$(type -P markdown)" ]] ; then
-          local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-          markdown ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-     elif [[ -n "$(type -P markdown_py)" ]] ; then
-          local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-          markdown_py ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-     elif [[ -n "$(type -P Markdown.pl)" ]] ; then
-          local file; for file in {README,CONTRIBUTING,DOCUMENTATION,Lua-API}; do \
-          Markdown.pl ${file}.md > ${file}.html && dohtml ${file}.html || die; done
-     else
-          dodoc {README,CONTRIBUTING,DOCUMENTATION,Lua-API}.md
-     fi
 }
 
 pkg_preinst() {
