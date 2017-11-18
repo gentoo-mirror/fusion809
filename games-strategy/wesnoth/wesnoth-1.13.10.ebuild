@@ -2,11 +2,12 @@
 
 EAPI=6
 inherit user cmake-utils
+MY_PV=${PV}-retag
 
 DESCRIPTION="Battle for Wesnoth - A fantasy turn-based strategy game"
 HOMEPAGE="http://www.wesnoth.org
      https://github.com/wesnoth/wesnoth"
-SRC_URI="https://github.com/${PN}/${PN}/archive/${PV}-retag.tar.gz -> ${P}.tar.gz"
+SRC_URI="https://github.com/${PN}/${PN}/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
 
 LICENSE="GPL-2"
 SLOT="0"
@@ -43,6 +44,8 @@ DEPEND="${RDEPEND}
      sys-devel/gettext
      virtual/pkgconfig"
 
+S=${WORKDIR}/${PN}-${MY_PV}
+
 pkg_setup() {
      if use openmp; then
           tc-has-openmp || die "Please switch to an openmp compatible compiler"
@@ -50,12 +53,6 @@ pkg_setup() {
 
      enewgroup ${PN}
      enewuser ${PN} -1 /bin/bash -1 ${PN}
-}
-
-src_unpack() {
-    unpack ${A}
-    cd "${S}"
-    epatch "${FILESDIR}/${P}-build.patch"
 }
 
 src_prepare() {
