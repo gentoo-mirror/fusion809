@@ -8,7 +8,7 @@ FETCH_P="${PN}_"$(replace_version_separator  3 '-')
 MY_PV=$(get_version_component_range 1-3)
 DESCRIPTION="A free C++ CAS (Computer Algebra System) library and its interfaces"
 HOMEPAGE="http://www-fourier.ujf-grenoble.fr/~parisse/giac.html"
-SRC_URI="http://sagetrac.lipn.univ-paris13.fr/sage/${FETCH_P}.tar.gz"
+SRC_URI="http://www-fourier.ujf-grenoble.fr/~parisse/debian/dists/stable/main/source/${FETCH_P}.tar.gz"
 LICENSE="GPL-2"
 
 SLOT="0"
