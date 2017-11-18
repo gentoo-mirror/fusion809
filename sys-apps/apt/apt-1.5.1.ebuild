@@ -7,7 +7,7 @@ inherit cmake-utils
 
 DESCRIPTION="Advanced front-end for dpkg"
 HOMEPAGE="https://wiki.debian.org/Apt"
-SRC_URI="http://http.debian.net/debian/pool/main/a/${PN}/${PN}_${PV}.tar.xz"
+SRC_URI="https://github.com/Debian/apt/archive/${PV}.tar.gz"
 
 LICENSE="GPL-2+"
 SLOT="0"
