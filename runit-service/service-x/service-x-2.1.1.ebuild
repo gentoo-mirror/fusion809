@@ -12,8 +12,8 @@ SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="runit-service/setupservices::powerman"
-RDEPEND=">=sys-process/runit-2.1.2-r1::powerman
+DEPEND="runit-service/setupservices"
+RDEPEND=">=sys-process/runit-2.1.2-r1
 	x11-apps/xinit"
 
 src_unpack() {
