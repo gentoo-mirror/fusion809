@@ -16,7 +16,8 @@ IUSE=""
 #RDEPEND=">=net-libs/nodejs-6.1
 #     dev-util/electron
 RDEPEND="
-     gnome-base/libgnome-keyring"
+     gnome-base/libgnome-keyring
+     x11-libs/libXScrnSaver"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/Brave-linux-x64"
