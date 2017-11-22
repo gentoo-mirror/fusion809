@@ -3,17 +3,17 @@
 
 EAPI=6
 
-DESCRIPTION="Service for Xorg"
+DESCRIPTION="Service for Xorg, this runs xinit on start up"
 HOMEPAGE="http://powerman.name/RTFM/runit.html"
 SRC_URI=""
 
-LICENSE="public-domain"
+LICENSE="GPL-3"
 SLOT="0"
 KEYWORDS="~amd64 ~x86"
 IUSE=""
 
-DEPEND="runit-service/setupservices"
-RDEPEND=">=sys-process/runit-2.1.2-r1
+DEPEND="runit-service/setupservices::powerman"
+RDEPEND=">=sys-process/runit-2.1.2-r1::powerman
 	x11-apps/xinit"
 
 src_unpack() {
@@ -22,5 +22,14 @@ src_unpack() {
 
 src_install() {
     mkdir -p "${D}/etc/sv/x"
-    cp -a $FILESDIR/* "${D}/etc/sv/x"
+    cp -a "$FILESDIR/{run,finish}" "${D}/etc/sv/x"
+    mkdir -p "${D}/usr/bin"
+    cp "$FILESDIR/xinit-runit" "${D}/usr/bin/xinit-runit"
+}
+
+pkg_postinst() {
+    ewarn "This package includes /usr/bin/xinit-runit,"
+    ewarn "which I personally recommend you edit according"
+    ewarn "to your needs. It, by default, starts X as the"
+    ewarn "user with the largest home folder."
 }

@@ -1,0 +1,3 @@
+#!/bin/bash
+USER=$(du --max-depth=0 /home/* | sort -n | head -n 1 | cut -d '/' -f 3)
+su - $USER -c "xinit &> /home/$USER/x.log"
