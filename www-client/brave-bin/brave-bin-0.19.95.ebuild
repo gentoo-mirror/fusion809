@@ -17,7 +17,8 @@ IUSE=""
 #     dev-util/electron
 RDEPEND="
      gnome-base/libgnome-keyring
-     x11-libs/libXScrnSaver"
+     x11-libs/libXScrnSaver
+     gnome-base/gconf-3.2.6-r4"
 DEPEND="${RDEPEND}"
 
 S="${WORKDIR}/Brave-linux-x64"
