@@ -1,0 +1,3 @@
+#!/bin/sh
+[ -r conf ] && . ./conf
+exec dhcpcd -B enp0s3 $OPTS 1>&2
