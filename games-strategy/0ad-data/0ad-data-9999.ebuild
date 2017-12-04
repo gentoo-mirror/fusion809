@@ -32,38 +32,10 @@ EGIT_CHECKOUT_DIR=${S}
 
 src_prepare() {
 	default
-	epatch "${FILESDIR}"/${P/-data}-gentoo.patch
-
 	rm binaries/data/tools/fontbuilder/fonts/*.txt
-	rm -fr binaries/data/l10n/
-}
-
-src_compile() {
-	addpredict /dev/nvidia-uvm
-
-	if [[ ${PV} == 9999* ]]; then
-
-		# Based on dist/build.sh
-		# This is the 0ad binary by another name
-		PYROGENESIS=/usr/bin/pyrogenesis
-
-		# Package the mod data
-		${PYROGENESIS} -mod=mod \
-			-archivebuild=binaries/data/mods/public \
-			-archivebuild-output=binaries/data/mods/public/public.zip || die
-		${PYROGENESIS} -archivebuild=binaries/data/mods/mod \
-			-archivebuild-output=binaries/data/mods/mod/mod.zip || die
-		rm -f binaries/data/config/dev.cfg
-	fi
 }
 
 src_install() {
-	insinto "${GAMES_DATADIR}"/0ad
-	doins -r binaries/data/{config,tools}
-	insinto "${GAMES_DATADIR}"/0ad/mods/mod
-	doins binaries/data/mods/mod/mod.zip
-	insinto "${GAMES_DATADIR}"/0ad/mods/public
-	doins binaries/data/mods/public/public.zip
-	prepgamesdirs
+	insinto /usr/share/0ad
+	doins -r binaries/data/*
 }
-
