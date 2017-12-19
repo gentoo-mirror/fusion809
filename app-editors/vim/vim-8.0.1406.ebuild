@@ -1,25 +1,21 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
+EAPI=6
 VIM_VERSION="8.0"
-PYTHON_COMPAT=( python{2_7,3_3,3_4,3_5,3_6} )
+PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 PYTHON_REQ_USE=threads
 inherit eutils vim-doc flag-o-matic fdo-mime versionator bash-completion-r1 python-r1
 
 if [[ ${PV} == 9999* ]] ; then
-     inherit mercurial
-     EHG_REPO_URI="https://vim.googlecode.com/hg/"
-     EHG_PROJECT="vim"
+     inherit git-r3
+     EGIT_REPO_URI="https://github.com/vim/vim.git"
 else
-     VIM_ORG_PATCH="vim-${PV}.patch.xz"
-     SRC_URI="ftp://ftp.vim.org/pub/vim/unix/vim-${VIM_VERSION}.tar.bz2
-         http://dev.gentoo.org/~radhermit/vim/${VIM_ORG_PATCH}
-         http://dev.gentoo.org/~radhermit/vim/vim-${PV}-gentoo-patches.tar.bz2"
+     SRC_URI="https://github.com/vim/vim/archive/v${PV}.tar.gz -> ${P}.tar.gz"
      KEYWORDS="*"
 fi
 
 DESCRIPTION="Vim, an improved vi-style text editor"
-HOMEPAGE="http://www.vim.org/"
+HOMEPAGE="http://www.vim.org/ https://github.com/vim/vim"
 
 SLOT="0"
 LICENSE="vim"
@@ -35,7 +31,7 @@ REQUIRED_USE="
 
 RDEPEND="
      >=app-eselect/eselect-vi-1.1
-     >=sys-libs/ncurses-5.2-r2
+     >=sys-libs/ncurses-5.2-r2:0=
      nls? ( virtual/libintl )
      acl? ( kernel_linux? ( sys-apps/acl ) )
      cscope? ( dev-util/cscope )
@@ -51,7 +47,7 @@ RDEPEND="
      perl? ( dev-lang/perl:= )
      python? ( ${PYTHON_DEPS} )
      racket? ( dev-scheme/racket )
-     ruby? ( || ( dev-lang/ruby:2.2 dev-lang/ruby:2.1 dev-lang/ruby:2.0 ) )
+     ruby? ( || ( dev-lang/ruby:2.3 dev-lang/ruby:2.2 dev-lang/ruby:2.1 dev-lang/ruby:2.0 ) )
      selinux? ( sys-libs/libselinux )
      tcl? ( dev-lang/tcl:0= )
      X? ( x11-libs/libXt )
@@ -61,64 +57,63 @@ DEPEND="${RDEPEND}
      nls? ( sys-devel/gettext )
 "
 
-S=${WORKDIR}/vim${VIM_VERSION/.}
+PATCHES=( "$FILESDIR/001_all_vim-6.3-xorg-75816.patch"
+"$FILESDIR/002_all_vim-7.3-apache-83565.patch"
+"$FILESDIR/003_all_vim-7.0-automake-substitutions-93378.patch"
+"$FILESDIR/004_all_vim-7.0-grub-splash-96155.patch"
+"$FILESDIR/005_all_vim_7.1-ada-default-compiler.patch"
+"$FILESDIR/006-vim-8.0-crosscompile.patch" )
 
 pkg_setup() {
-     # people with broken alphabets run into trouble. bug 82186.
-     unset LANG LC_ALL
-     export LC_COLLATE="C"
+    # people with broken alphabets run into trouble. bug 82186.
+    unset LANG LC_ALL
+    export LC_COLLATE="C"
 
-     # Gnome sandbox silliness. bug #114475.
-     mkdir -p "${T}"/home
-     export HOME="${T}"/home
+    # Gnome sandbox silliness. bug #114475.
+    mkdir -p "${T}"/home
+    export HOME="${T}"/home
 }
 
 src_prepare() {
-     if [[ ${PV} != 9999* ]] ; then
-         if [[ -f "${WORKDIR}"/${VIM_ORG_PATCH%.xz} ]] ; then
-             # Apply any patches available from vim.org for this version
-             epatch "${WORKDIR}"/${VIM_ORG_PATCH%.xz}
-         fi
+    epatch "${FILESDIR}/001_all_vim-6.3-xorg-75816.patch"
+    epatch "${FILESDIR}/002_all_vim-7.3-apache-83565.patch"
+    epatch "${FILESDIR}/003_all_vim-7.0-automake-substitutions-93378.patch"
+    epatch "${FILESDIR}/004_all_vim-7.0-grub-splash-96155.patch"
+    epatch "${FILESDIR}/005_all_vim_7.1-ada-default-compiler.patch"
+    epatch "${FILESDIR}/006-vim-8.0-crosscompile.patch"
 
-         if [[ -d "${WORKDIR}"/patches/ ]]; then
-             # Gentoo patches to fix runtime issues, cross-compile errors, etc
-             EPATCH_SUFFIX="patch" EPATCH_FORCE="yes" \
-                 epatch "${WORKDIR}"/patches/
-         fi
-     fi
+    # Fixup a script to use awk instead of nawk
+    sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
+        || die "mve.awk sed failed"
 
-     # Fixup a script to use awk instead of nawk
-     sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
-         || die "mve.awk sed failed"
+    # Read vimrc and gvimrc from /etc/vim
+    echo '#define SYS_VIMRC_FILE "'${EPREFIX}'/etc/vim/vimrc"' >> "${S}"/src/feature.h
+    echo '#define SYS_GVIMRC_FILE "'${EPREFIX}'/etc/vim/gvimrc"' >> "${S}"/src/feature.h
 
-     # Read vimrc and gvimrc from /etc/vim
-     echo '#define SYS_VIMRC_FILE "'${EPREFIX}'/etc/vim/vimrc"' >> "${S}"/src/feature.h
-     echo '#define SYS_GVIMRC_FILE "'${EPREFIX}'/etc/vim/gvimrc"' >> "${S}"/src/feature.h
+    # Use exuberant ctags which installs as /usr/bin/exuberant-ctags.
+    # Hopefully this pattern won't break for a while at least.
+    # This fixes bug 29398 (27 Sep 2003 agriffis)
+    sed -i 's/\<ctags\("\| [-*.]\)/exuberant-&/g' \
+        "${S}"/runtime/doc/syntax.txt \
+        "${S}"/runtime/doc/tagsrch.txt \
+        "${S}"/runtime/doc/usr_29.txt \
+        "${S}"/runtime/menu.vim \
+        "${S}"/src/configure.ac || die 'sed failed'
 
-     # Use exuberant ctags which installs as /usr/bin/exuberant-ctags.
-     # Hopefully this pattern won't break for a while at least.
-     # This fixes bug 29398 (27 Sep 2003 agriffis)
-     sed -i 's/\<ctags\("\| [-*.]\)/exuberant-&/g' \
-         "${S}"/runtime/doc/syntax.txt \
-         "${S}"/runtime/doc/tagsrch.txt \
-         "${S}"/runtime/doc/usr_29.txt \
-         "${S}"/runtime/menu.vim \
-         "${S}"/src/configure.in || die 'sed failed'
+    # Don't be fooled by /usr/include/libc.h.  When found, vim thinks
+    # this is NeXT, but it's actually just a file in dev-libs/9libs
+    # This fixes bug 43885 (20 Mar 2004 agriffis)
+    sed -i 's/ libc\.h / /' "${S}"/src/configure.ac || die 'sed failed'
 
-     # Don't be fooled by /usr/include/libc.h.  When found, vim thinks
-     # this is NeXT, but it's actually just a file in dev-libs/9libs
-     # This fixes bug 43885 (20 Mar 2004 agriffis)
-     sed -i 's/ libc\.h / /' "${S}"/src/configure.in || die 'sed failed'
+    # gcc on sparc32 has this, uhm, interesting problem with detecting EOF
+    # correctly. To avoid some really entertaining error messages about stuff
+    # which isn't even in the source file being invalid, we'll do some trickery
+    # to make the error never occur. bug 66162 (02 October 2004 ciaranm)
+    find "${S}" -name '*.c' | while read c ; do echo >> "$c" ; done
 
-     # gcc on sparc32 has this, uhm, interesting problem with detecting EOF
-     # correctly. To avoid some really entertaining error messages about stuff
-     # which isn't even in the source file being invalid, we'll do some trickery
-     # to make the error never occur. bug 66162 (02 October 2004 ciaranm)
-     find "${S}" -name '*.c' | while read c ; do echo >> "$c" ; done
-
-     # conditionally make the manpager.sh script
-     if use vim-pager ; then
-     		cat <<-END > "${S}"/runtime/macros/manpager.sh
+    # conditionally make the manpager.sh script
+    if use vim-pager ; then
+		cat <<-END > "${S}"/runtime/macros/manpager.sh
 			#!/bin/sh
 			sed -e 's/\x1B\[[[:digit:]]\+m//g' | col -b | \\
 					vim \\
@@ -129,23 +124,23 @@ src_prepare() {
 			END
     fi
 
-     # Try to avoid sandbox problems. Bug #114475.
-     if [[ -d "${S}"/src/po ]] ; then
+    # Try to avoid sandbox problems. Bug #114475.
+    if [[ -d "${S}"/src/po ]] ; then
          sed -i '/-S check.vim/s,..VIM.,ln -s $(VIM) testvim \; ./testvim -X,' \
-             "${S}"/src/po/Makefile
-     fi
+            "${S}"/src/po/Makefile
+    fi
 
-     if version_is_at_least 7.3.122 ; then
+    if version_is_at_least 7.3.122 ; then
          cp "${S}"/src/config.mk.dist "${S}"/src/auto/config.mk
-     fi
+    fi
 
-     # Bug #378107 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
-     if version_is_at_least 7.3 ; then
+    # Bug #378107 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
+    if version_is_at_least 7.3 ; then
          sed -i "s:\\\$(PERLLIB)/ExtUtils/xsubpp:${EPREFIX}/usr/bin/xsubpp:"     \
              "${S}"/src/Makefile || die 'sed for ExtUtils-ParseXS failed'
-     fi
+    fi
 
-     epatch_user
+    eapply_user
 }
 
 src_configure() {
@@ -161,7 +156,7 @@ src_configure() {
      replace-flags -O3 -O2
 
      # Fix bug 18245: Prevent "make" from the following chain:
-     # (1) Notice configure.in is newer than auto/configure
+     # (1) Notice configure.ac is newer than auto/configure
      # (2) Rebuild auto/configure
      # (3) Notice auto/configure is newer than auto/config.mk
      # (4) Run ./configure (with wrong args) to remake auto/config.mk
@@ -248,10 +243,10 @@ src_configure() {
          )
      fi
 
-     # Let Portage do the stripping. Some people like that.
+     # let package manager strip binaries
      export ac_cv_prog_STRIP="$(type -P true ) faking strip"
 
-     # Keep Gentoo Prefix env contained within the EPREFIX
+     # keep prefix env contained within the EPREFIX
      use prefix && myconf+=( --without-local-dir )
 
      econf \
@@ -279,19 +274,7 @@ src_test() {
      # Don't let vim talk to X
      unset DISPLAY
 
-     # We've got to call make test from within testdir, since the Makefiles
-     # don't pass through our VIMPROG argument
-     cd "${S}"/src/testdir
-
-     # Test 49 won't work inside a portage environment
-     einfo "Test 49 isn't sandbox-friendly, so it will be skipped."
-     sed -i 's~test49.out~~g' Makefile
-
-     # We don't want to rebuild vim before running the tests
-     sed -i 's,: \$(VIMPROG),: ,' Makefile
-
-     # Don't try to do the additional GUI test
-     emake -j1 VIMPROG=../vim nongui
+     emake -j1 -C src/testdir nongui
 }
 
 # Make convenience symlinks, hopefully without stepping on toes.  Some
@@ -359,26 +342,6 @@ pkg_postinst() {
      # Update documentation tags (from vim-doc.eclass)
      update_vim_helptags
 
-     if [[ -z ${REPLACING_VERSIONS} ]] ; then
-         if use X ; then
-             echo
-             elog "The 'X' USE flag enables vim <-> X communication, like"
-             elog "updating the xterm titlebar. It does not install a GUI."
-         fi
-         echo
-         elog "To install a GUI version of vim, use the app-editors/gvim"
-         elog "package."
-         echo
-         elog "Vim 7 includes an integrated spell checker. You need to install"
-         elog "word list files before you can use it. There are ebuilds for"
-         elog "some of these named app-vim/vim-spell-*. If your language of"
-         elog "choice is not included, please consult vim-spell.eclass for"
-         elog "instructions on how to make a package."
-         echo
-         ewarn "Note that the English word lists are no longer installed by"
-         ewarn "default."
-     fi
-
      # Make convenience symlinks
      update_vim_symlinks
 }
@@ -390,3 +353,5 @@ pkg_postrm() {
      # Make convenience symlinks
      update_vim_symlinks
 }
+
+

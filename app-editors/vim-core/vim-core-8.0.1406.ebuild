@@ -1,23 +1,20 @@
 # Distributed under the terms of the GNU General Public License v2
 
-EAPI=5
-VIM_VERSION="7.4"
+EAPI=6
+VIM_VERSION="8.0"
 inherit eutils vim-doc flag-o-matic versionator bash-completion-r1 prefix
 
 if [[ ${PV} == 9999* ]] ; then
-     inherit mercurial
-     EHG_REPO_URI="https://vim.googlecode.com/hg/"
-     EHG_PROJECT="vim"
+     inherit git-r3
+     EGIT_REPO_URI="https://github.com/vim/vim.git"
+     EGIT_CHECKOUT_DIR=${WORKDIR}/vim-${PV}
 else
-     VIM_ORG_PATCH="vim-${PV}.patch.xz"
-     SRC_URI="ftp://ftp.vim.org/pub/vim/unix/vim-${VIM_VERSION}.tar.bz2
-          http://dev.gentoo.org/~radhermit/vim/${VIM_ORG_PATCH}
-          http://dev.gentoo.org/~radhermit/vim/vim-${PV}-gentoo-patches.tar.bz2"
+     SRC_URI="https://github.com/vim/vim/archive/v${PV}.tar.gz -> vim-${PV}.tar.gz"
      KEYWORDS="*"
 fi
 
 DESCRIPTION="vim and gvim shared files"
-HOMEPAGE="http://www.vim.org/"
+HOMEPAGE="http://www.vim.org/ https://github.com/vim/vim"
 
 SLOT="0"
 LICENSE="vim"
@@ -26,7 +23,14 @@ IUSE="nls acl minimal"
 DEPEND="sys-devel/autoconf"
 PDEPEND="!minimal? ( app-vim/gentoo-syntax )"
 
-S=${WORKDIR}/vim${VIM_VERSION/.}
+S=${WORKDIR}/vim-${PV}
+
+PATCHES=( "$FILESDIR/001_all_vim-6.3-xorg-75816.patch"
+"$FILESDIR/002_all_vim-7.3-apache-83565.patch"
+"$FILESDIR/003_all_vim-7.0-automake-substitutions-93378.patch"
+"$FILESDIR/004_all_vim-7.0-grub-splash-96155.patch"
+"$FILESDIR/005_all_vim_7.1-ada-default-compiler.patch"
+"$FILESDIR/006-vim-8.0-crosscompile.patch" )
 
 pkg_setup() {
      # people with broken alphabets run into trouble. bug 82186.
@@ -39,18 +43,12 @@ pkg_setup() {
 }
 
 src_prepare() {
-     if [[ ${PV} != 9999* ]] ; then
-          if [[ -f "${WORKDIR}"/${VIM_ORG_PATCH%.xz} ]] ; then
-               # Apply any patches available from vim.org for this version
-               epatch "${WORKDIR}"/${VIM_ORG_PATCH%.xz}
-          fi
-
-          if [[ -d "${WORKDIR}"/patches/ ]]; then
-               # Gentoo patches to fix runtime issues, cross-compile errors, etc
-               EPATCH_SUFFIX="patch" EPATCH_FORCE="yes" \
-                    epatch "${WORKDIR}"/patches/
-          fi
-     fi
+    epatch "${FILESDIR}/001_all_vim-6.3-xorg-75816.patch"
+    epatch "${FILESDIR}/002_all_vim-7.3-apache-83565.patch"
+    epatch "${FILESDIR}/003_all_vim-7.0-automake-substitutions-93378.patch"
+    epatch "${FILESDIR}/004_all_vim-7.0-grub-splash-96155.patch"
+    epatch "${FILESDIR}/005_all_vim_7.1-ada-default-compiler.patch"
+    epatch "${FILESDIR}/006-vim-8.0-crosscompile.patch"
 
      # Fixup a script to use awk instead of nawk
      sed -i '1s|.*|#!'"${EPREFIX}"'/usr/bin/awk -f|' "${S}"/runtime/tools/mve.awk \
@@ -68,12 +66,12 @@ src_prepare() {
           "${S}"/runtime/doc/tagsrch.txt \
           "${S}"/runtime/doc/usr_29.txt \
           "${S}"/runtime/menu.vim \
-          "${S}"/src/configure.in || die 'sed failed'
+          "${S}"/src/configure.ac || die 'sed failed'
 
      # Don't be fooled by /usr/include/libc.h.  When found, vim thinks
      # this is NeXT, but it's actually just a file in dev-libs/9libs
      # This fixes bug 43885 (20 Mar 2004 agriffis)
-     sed -i 's/ libc\.h / /' "${S}"/src/configure.in || die 'sed failed'
+     sed -i 's/ libc\.h / /' "${S}"/src/configure.ac || die 'sed failed'
 
      # gcc on sparc32 has this, uhm, interesting problem with detecting EOF
      # correctly. To avoid some really entertaining error messages about stuff
@@ -98,7 +96,7 @@ src_prepare() {
                "${S}"/src/Makefile || die 'sed for ExtUtils-ParseXS failed'
      fi
 
-     epatch_user
+     eapply_user
 }
 
 src_configure() {
@@ -114,7 +112,7 @@ src_configure() {
      replace-flags -O3 -O2
 
      # Fix bug 18245: Prevent "make" from the following chain:
-     # (1) Notice configure.in is newer than auto/configure
+     # (1) Notice configure.ac is newer than auto/configure
      # (2) Rebuild auto/configure
      # (3) Notice auto/configure is newer than auto/config.mk
      # (4) Run ./configure (with wrong args) to remake auto/config.mk
@@ -162,8 +160,7 @@ src_install() {
      local vimfiles=/usr/share/vim/vim${VIM_VERSION/.}
 
      dodir /usr/{bin,share/{man/man1,vim}}
-     cd src || die "cd src failed"
-     emake \
+     emake -C src \
           installruntime \
           installmanlinks \
           installmacros \
@@ -171,7 +168,6 @@ src_install() {
           installtutorbin \
           installtools \
           install-languages \
-          install-icons \
           DESTDIR="${D}" \
           BINDIR="${EPREFIX}"/usr/bin \
           MANDIR="${EPREFIX}"/usr/share/man \
@@ -182,7 +178,7 @@ src_install() {
      # default vimrc is installed by vim-core since it applies to
      # both vim and gvim
      insinto /etc/vim/
-     newins "${FILESDIR}"/vimrc-funtoo vimrc
+     newins "${FILESDIR}"/vimrc-funtoo-1 vimrc
      eprefixify "${ED}"/etc/vim/vimrc
 
      if use minimal ; then
@@ -226,3 +222,4 @@ pkg_postrm() {
      # Update documentation tags (from vim-doc.eclass)
      update_vim_helptags
 }
+
