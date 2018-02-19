@@ -4,8 +4,8 @@ EAPI=5
 
 inherit eutils mono-env gnome2-utils vcs-snapshot fdo-mime
 
-#MY_PV="release-${PV}"
-MY_PV="playtest-${PV}"
+MY_PV="release-${PV}"
+#MY_PV="playtest-${PV}"
 DESCRIPTION="A free RTS engine supporting games like Command & Conquer, Red Alert and Dune2k"
 HOMEPAGE="http://www.openra.net/"
 SRC_URI="https://github.com/OpenRA/OpenRA/archive/${MY_PV}.tar.gz -> ${P}.tar.gz"
