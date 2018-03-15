@@ -5,7 +5,7 @@ inherit unpacker eutils
 
 DESCRIPTION="A free molecule editor written in Java"
 HOMEPAGE="https://www.chemaxon.com/download/marvin-suite/#marvin"
-SRC_URI="http://dl.chemaxon.com/marvin/${PV}/Marvin_linux_${PV}.deb"
+SRC_URI="http://dl.chemaxon.com/marvin/${PV}.0/marvin_linux_${PV}.deb"
 
 LICENSE="Marvin-EULA"
 SLOT="0"
