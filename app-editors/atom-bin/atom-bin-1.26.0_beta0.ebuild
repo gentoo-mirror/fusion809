@@ -8,8 +8,9 @@ inherit flag-o-matic python-any-r1 eutils unpacker pax-utils
 DESCRIPTION="A hackable text editor for the 21st Century - built from official binary package."
 HOMEPAGE="https://atom.io"
 MY_PN="atom"
+MY_PV=${PV/_/-}
 SRC_URI="
-     amd64? ( https://github.com/${MY_PN}/${MY_PN}/releases/download/v${PV}/${MY_PN}-amd64.tar.gz -> ${MY_PN}-amd64-${PV}.tar.gz )
+     amd64? ( https://github.com/${MY_PN}/${MY_PN}/releases/download/v${MY_PV}/${MY_PN}-amd64.tar.gz -> ${MY_PN}-amd64-${MY_PV}.tar.gz )
 "
 
 RESTRICT="mirror"
@@ -49,7 +50,7 @@ QA_PRESTRIPPED="
      /usr/share/${MY_PN}/libgcrypt.so.11
 "
 
-S="${WORKDIR}/${MY_PN}-${PV}-amd64"
+S="${WORKDIR}/${MY_PN}-beta-${MY_PV}-amd64"
 
 pkg_setup() {
      python-any-r1_pkg_setup
