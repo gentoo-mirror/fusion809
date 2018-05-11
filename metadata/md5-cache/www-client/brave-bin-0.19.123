@@ -1,0 +1,11 @@
+DEFINED_PHASES=install
+DEPEND=gnome-base/libgnome-keyring x11-libs/libXScrnSaver gnome-base/gconf net-print/cups
+DESCRIPTION=Brave web browser for laptops and desktops (binary)
+EAPI=6
+HOMEPAGE=https://www.brave.com
+KEYWORDS=~amd64 ~x86
+LICENSE=MPL-2.0
+RDEPEND=gnome-base/libgnome-keyring x11-libs/libXScrnSaver gnome-base/gconf net-print/cups
+SLOT=0
+SRC_URI=https://www.github.com/brave/browser-laptop/releases/download/v0.19.123dev/Brave.tar.bz2 -> Brave-0.19.123.tar.bz2
+_md5_=28f70d8aef3c0e9986411e0da1d5fcb4

@@ -1,0 +1,9 @@
+DEFINED_PHASES=install
+DESCRIPTION=A text editor in less than 1000 LOC with syntax highlight and search.
+EAPI=6
+HOMEPAGE=https://github.com/antirez/kilo
+KEYWORDS=~amd64 ~x86
+LICENSE=BSD-2
+SLOT=0
+SRC_URI=https://github.com/antirez/kilo/archive/62b099af00b542bdb08471058d527af258a349cf.tar.gz
+_md5_=254079969f1a60501ec7ee868cad19a2

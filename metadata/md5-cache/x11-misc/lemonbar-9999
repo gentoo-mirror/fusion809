@@ -1,0 +1,11 @@
+DEFINED_PHASES=prepare unpack
+DEPEND=x11-libs/libxcb >=dev-lang/perl-5 >=dev-vcs/git-1.8.2.1
+DESCRIPTION=A featherweight, lemon-scented, bar based on xcb
+EAPI=6
+HOMEPAGE=https://github.com/LemonBoy/bar
+KEYWORDS=~x86 ~amd64
+LICENSE=MIT
+RDEPEND=x11-libs/libxcb
+SLOT=0
+_eclasses_=git-r3	af51ccfceeb403ab80f1bf9209d372c8
+_md5_=dc56e83bff918d7e972139f158834c5b

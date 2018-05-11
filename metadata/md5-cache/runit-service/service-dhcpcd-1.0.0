@@ -1,0 +1,9 @@
+DEFINED_PHASES=install unpack
+DEPEND=runit-service/setupservices
+DESCRIPTION=runit service for dhcpcd
+EAPI=6
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL-3
+RDEPEND=>=sys-process/runit-2.1.2-r1 net-misc/dhcpcd
+SLOT=0
+_md5_=8107fed4cca9eed92d3679b95224b4ab

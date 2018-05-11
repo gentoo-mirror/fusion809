@@ -1,0 +1,9 @@
+DEFINED_PHASES=install unpack
+DEPEND=runit-service/setupservices
+DESCRIPTION=runit service package for NetworkManager
+EAPI=6
+KEYWORDS=~amd64 ~x86
+LICENSE=GPL-3
+RDEPEND=>=sys-process/runit-2.1.2-r1 net-misc/networkmanager
+SLOT=0
+_md5_=a6f422da3fa5387d8ade67ac5f2fd8c2
