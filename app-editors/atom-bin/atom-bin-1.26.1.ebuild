@@ -7,7 +7,7 @@ inherit flag-o-matic python-any-r1 eutils unpacker pax-utils
 
 DESCRIPTION="A hackable text editor for the 21st Century - built from official binary package."
 HOMEPAGE="https://atom.io"
-MY_PN="atom-beta"
+MY_PN="atom"
 MY_PV=${PV/_/-}
 SRC_URI="
      amd64? ( https://github.com/atom/atom/releases/download/v${MY_PV}/atom-amd64.tar.gz -> atom-amd64-${MY_PV}.tar.gz )
