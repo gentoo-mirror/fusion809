@@ -50,7 +50,7 @@ QA_PRESTRIPPED="
      /usr/share/${MY_PN}/libgcrypt.so.11
 "
 
-S="${WORKDIR}/${MY_PN}-beta-${MY_PV}-amd64"
+S="${WORKDIR}/atom-beta-${MY_PV}-amd64"
 
 pkg_setup() {
      python-any-r1_pkg_setup
@@ -68,28 +68,31 @@ src_prepare(){
 }
 
 src_install() {
-     pax-mark m ${MY_PN}
+     pax-mark m atom
      insinto ${EPREFIX}/usr/share/${MY_PN}
      doins -r .
-     doicon ${MY_PN}.png
+     mv atom.png atom-beta.png
+     doicon atom-beta.png
      insinto ${EPREFIX}/usr/share/doc/${MY_PN}
      newins resources/LICENSE.md copyright
      newbin ${FILESDIR}/${PN} ${MY_PN}
      insinto ${EPREFIX}/usr/share/lintian/overrides
-     newins ${FILESDIR}/${MY_PN}-lintian ${MY_PN}
-     dosym ${EPREFIX}/usr/share/${MY_PN}/resources/app/apm/bin/apm ${EPREFIX}/usr/bin/apm
+     newins ${FILESDIR}/atom-lintian ${MY_PN}
+     dosym ${EPREFIX}/usr/share/${MY_PN}/resources/app/apm/bin/apm ${EPREFIX}/usr/bin/apm-beta
 
      # Fixes permissions
      fperms +x /usr/bin/${MY_PN}
-     fperms +x /usr/share/${MY_PN}/${MY_PN}
-     fperms +x /usr/share/${MY_PN}/resources/app/${MY_PN}.sh
+     fperms +x /usr/share/${MY_PN}/atom
+     fperms +x /usr/share/${MY_PN}/resources/app/atom.sh
      if use !system-node; then
           fperms +x /usr/share/${MY_PN}/resources/app/apm/bin/node
           fperms +x /usr/share/${MY_PN}/resources/app/apm/bin/npm
      fi
      fperms +x /usr/share/${MY_PN}/resources/app/apm/bin/apm
      fperms +x /usr/share/${MY_PN}/resources/app/apm/node_modules/npm/bin/node-gyp-bin/node-gyp
-     
+     fperms +x /usr/share/${MY_PN}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux
+
      insinto /usr/share/applications
-     newins ${FILESDIR}/atom.desktop atom.desktop
+     newins ${FILESDIR}/atom-beta.desktop atom-beta.desktop
 }
+

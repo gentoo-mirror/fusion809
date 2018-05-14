@@ -50,7 +50,7 @@ QA_PRESTRIPPED="
      /usr/share/${MY_PN}/libgcrypt.so.11
      /usr/share/${MY_PN}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux"
 
-S="${WORKDIR}/${MY_PN}-${MY_PV}-amd64"
+S="${WORKDIR}/atom-${MY_PV}-amd64"
 
 pkg_setup() {
      python-any-r1_pkg_setup
@@ -71,14 +71,13 @@ src_install() {
      pax-mark m atom
      insinto ${EPREFIX}/usr/share/${MY_PN}
      doins -r .
-     mv atom.png atom-beta.png
-     doicon atom-beta.png
+     doicon atom.png
      insinto ${EPREFIX}/usr/share/doc/${MY_PN}
      newins resources/LICENSE.md copyright
      newbin ${FILESDIR}/${PN} ${MY_PN}
      insinto ${EPREFIX}/usr/share/lintian/overrides
      newins ${FILESDIR}/atom-lintian ${MY_PN}
-     dosym ${EPREFIX}/usr/share/${MY_PN}/resources/app/apm/bin/apm ${EPREFIX}/usr/bin/apm-beta
+     dosym ${EPREFIX}/usr/share/${MY_PN}/resources/app/apm/bin/apm ${EPREFIX}/usr/bin/apm
 
      # Fixes permissions
      fperms +x /usr/bin/${MY_PN}
@@ -93,5 +92,5 @@ src_install() {
      fperms +x /usr/share/${MY_PN}/resources/app.asar.unpacked/node_modules/symbols-view/vendor/ctags-linux
 
      insinto /usr/share/applications
-     newins ${FILESDIR}/atom-beta.desktop atom-beta.desktop
+     newins ${FILESDIR}/atom.desktop atom.desktop
 }
