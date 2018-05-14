@@ -10,7 +10,7 @@ HOMEPAGE="https://atom.io"
 MY_PN="atom-beta"
 MY_PV=${PV/_/-}
 SRC_URI="
-     amd64? ( https://github.com/${MY_PN}/${MY_PN}/releases/download/v${MY_PV}/${MY_PN}-amd64.tar.gz -> ${MY_PN}-amd64-${MY_PV}.tar.gz )
+     amd64? ( https://github.com/atom/atom/releases/download/v${MY_PV}/atom-amd64.tar.gz -> atom-amd64-${MY_PV}.tar.gz )
 "
 
 RESTRICT="mirror"
