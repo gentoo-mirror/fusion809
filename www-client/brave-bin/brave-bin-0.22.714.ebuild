@@ -22,7 +22,7 @@ RDEPEND="
      net-print/cups"
 DEPEND="${RDEPEND}"
 
-S="${WORKDIR}/Brave-linux-x64"
+S="${WORKDIR}/brave-linux-x64"
 
 src_install() {
      insinto /usr/share/applications
