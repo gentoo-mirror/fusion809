@@ -4,16 +4,16 @@ EAPI=6
 
 inherit eutils versionator
 
-RNAME="oxygen"
+RNAME="photon"
 SR=$(get_version_component_range 3 $PV)
 if [[ $SR == "0" ]]; then
     SR="R"
 fi
 
-DESCRIPTION="Eclipse IDE for C/C++"
+DESCRIPTION="Eclipse IDE for Java"
 HOMEPAGE="http://www.eclipse.org"
 
-SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-cpp-${RNAME}-${SR}-linux-gtk"
+SRC_BASE="http://www.eclipse.org/downloads/download.php?file=/technology/epp/downloads/release/${RNAME}/${SR}/eclipse-java-${RNAME}-${SR}-linux-gtk"
 
 SRC_URI="
      amd64? ( ${SRC_BASE}-x86_64.tar.gz&r=1 -> ${P}-x86_64.tar.gz )
@@ -51,6 +51,6 @@ src_install() {
      insinto /etc
      newins "${T}"/eclipserc-bin-${SLOT} eclipserc-bin-${SLOT}
 
-     newbin "${T}"/eclipse-bin-${SLOT} eclipse-cpp-${SLOT}
-     make_desktop_entry "eclipse-cpp-${SLOT}" "Eclipse C/C++ IDE" "${dest}/icon.xpm" "Development;IDE"
+     newbin "${T}"/eclipse-bin-${SLOT} eclipse-java-${SLOT}
+     make_desktop_entry "eclipse-java-${SLOT}" "Eclipse Java IDE" "${dest}/icon.xpm" "Development;IDE"
 }

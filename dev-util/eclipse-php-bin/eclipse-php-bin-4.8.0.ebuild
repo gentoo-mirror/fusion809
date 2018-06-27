@@ -4,7 +4,7 @@ EAPI=6
 
 inherit eutils versionator
 
-RNAME="oxygen"
+RNAME="photon"
 SR=$(get_version_component_range 3 $PV)
 if [[ $SR == "0" ]]; then
     SR="R"
