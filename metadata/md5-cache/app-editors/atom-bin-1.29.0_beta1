@@ -1,14 +1,14 @@
 DEFINED_PHASES=install prepare setup unpack
-DEPEND=|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata !!dev-util/atom-shell !dev-util/apm !=app-editors/atom-1.28.0
+DEPEND=|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata !!dev-util/atom-shell !dev-util/apm !app-editors/atom
 DESCRIPTION=A hackable text editor for the 21st Century - built from official binary package.
 EAPI=6
 HOMEPAGE=https://atom.io
 IUSE=system-node
 KEYWORDS=~amd64
 LICENSE=MIT
-RDEPEND=|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata !!dev-util/atom-shell !dev-util/apm !=app-editors/atom-1.28.0 x11-libs/gtk+:2 x11-libs/libnotify gnome-base/libgnome-keyring dev-libs/nss dev-libs/nspr gnome-base/gconf media-libs/alsa-lib net-print/cups sys-libs/libcap system-node? ( net-libs/nodejs[npm] ) x11-libs/libXtst x11-libs/pango
+RDEPEND=|| ( >=dev-lang/python-2.7.5-r2:2.7 ) media-fonts/inconsolata !!dev-util/atom-shell !dev-util/apm !app-editors/atom x11-libs/gtk+:2 x11-libs/libnotify gnome-base/libgnome-keyring dev-libs/nss dev-libs/nspr gnome-base/gconf media-libs/alsa-lib net-print/cups sys-libs/libcap system-node? ( net-libs/nodejs[npm] ) x11-libs/libXtst x11-libs/pango
 RESTRICT=mirror
-SLOT=1
-SRC_URI=amd64? ( https://github.com/atom/atom/releases/download/v1.28.0/atom-amd64.tar.gz -> atom-amd64-1.28.0.tar.gz )
+SLOT=0
+SRC_URI=amd64? ( https://github.com/atom/atom/releases/download/v1.29.0-beta1/atom-amd64.tar.gz -> atom-amd64-1.29.0-beta1.tar.gz )
 _eclasses_=desktop	1b286a7e7143d8c4ec89cd0d2743a097	epatch	9a5f039771f143195164a15a4faa41a1	estack	43ddf5aaffa7a8d0482df54d25a66a1f	eutils	5b8ce72259e08104b337fe28c6de5dbc	flag-o-matic	5128c4729303400bd8d4b0b966530955	ltprune	607e058da37aa6dabfa408b7d61da72e	multilib	97f470f374f2e94ccab04a2fb21d811e	pax-utils	b963274a93e76570a88168c1f1db4cd7	preserve-libs	ef207dc62baddfddfd39a164d9797648	python-any-r1	6faea633ae2f79f6d55dcfd431b79fbf	python-utils-r1	ffa9c3284c6b07b8c9f7933911f63812	toolchain-funcs	1e35303c63cd707f6c3422b4493d5607	unpacker	87633b2194cdb56adaa1f5a5c8862c44	vcs-clean	2a0f74a496fa2b1552c4f3398258b7bf
-_md5_=2cab931b86e7bfa26d0f275c5174a175
+_md5_=f1cd8f8361a13d2c0a750fe2da821d46
