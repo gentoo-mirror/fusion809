@@ -1,7 +1,7 @@
 # Distributed under the terms of the GNU General Public License v2
 
 EAPI=6
-VIM_VERSION="8.0"
+VIM_VERSION="8.1"
 PYTHON_COMPAT=( python{2_7,3_4,3_5,3_6} )
 PYTHON_REQ_USE=threads
 inherit eutils vim-doc flag-o-matic fdo-mime versionator bash-completion-r1 python-r1
@@ -134,7 +134,7 @@ src_prepare() {
          cp "${S}"/src/config.mk.dist "${S}"/src/auto/config.mk
     fi
 
-    # Bug #378107 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
+    # Bug #378.17 - Build properly with >=perl-core/ExtUtils-ParseXS-3.20.0
     if version_is_at_least 7.3 ; then
          sed -i "s:\\\$(PERLLIB)/ExtUtils/xsubpp:${EPREFIX}/usr/bin/xsubpp:"     \
              "${S}"/src/Makefile || die 'sed for ExtUtils-ParseXS failed'
@@ -353,4 +353,5 @@ pkg_postrm() {
      # Make convenience symlinks
      update_vim_symlinks
 }
+
 
