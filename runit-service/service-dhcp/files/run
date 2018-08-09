@@ -1,4 +1,0 @@
-#!/bin/sh
-[ -r conf ] && . ./conf
-# Edit the following line according to your needs
-exec dhclient wlo1 

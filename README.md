@@ -1,4 +1,5 @@
 # fusion809 Overlay
 This is my own personal overlay. The [funtoo-overlay](https://github.com/funtoo/funtoo-overlay) is also synced from it. 
 
-If you use the runit-service/service-x package be sure to enable the [powerman-overlay](https://github.com/powerman/powerman-overlay) too as it's forked from it and depends on many packages provided by it. 
+# 10 Aug 2018 changes
+On the 10th of August 2018, I decided to drop several packages that I seldom use and hence there is little reason for me to maintain them. I don't really use runit any more, it was more a passing curiosity so I've rm'ed it. Likewise I don't use Atom much, nor do I use Bluefish, CodeLite, Eclipse, Lemonbar, 2bwm, Brave Browser, baselayout, hyde, speedtest-cli, 0 A.D., TORCS, Speed Dreams, xboard, pyowm, Eternal Lands, MegaGlest, RS Unix Client (obsolete), UrbanTerror, Giac, APT, *etc.* If you wish to check out these packages from before the mass delete checkout commit f2e02c692380ae391c04da7a9450b4e3bd42d0b0, i.e. run: `git checkout f2e02c692380ae391c04da7a9450b4e3bd42d0b0` from this repository. If you wish to use runit, with the help of these old files be sure to enable the [powerman-overlay](https://github.com/powerman/powerman-overlay) too as it's forked from it and depends on many packages provided by it. 
