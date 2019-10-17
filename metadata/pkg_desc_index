@@ -1,8 +1,8 @@
-app-editors/gvim 8.1.2161 9999: GUI version of the Vim text editor
+app-editors/gvim 8.1.2168 9999: GUI version of the Vim text editor
 app-editors/kilo 1.0: A text editor in less than 1000 LOC with syntax highlight and search.
 app-editors/sublime-text 3176: Sophisticated text editor for code, markup and prose
-app-editors/vim 8.1.2161 9999: Vim, an improved vi-style text editor
-app-editors/vim-core 8.1.2161 9999: vim and gvim shared files
+app-editors/vim 8.1.2168 9999: Vim, an improved vi-style text editor
+app-editors/vim-core 8.1.2168 9999: vim and gvim shared files
 app-editors/visual-studio-code 1.32.3: Multiplatform Visual Studio Code from Microsoft
 games-rpg/runescape-launcher 2.2.4-r4: Official RuneScape NXT client launcher
 sci-chemistry/avogadro 1.1.1 1.2.0: Advanced molecular editor that uses Qt4 and OpenGL
