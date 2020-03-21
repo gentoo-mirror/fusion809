@@ -26,7 +26,6 @@ PDEPEND="!minimal? ( app-vim/gentoo-syntax )"
 S=${WORKDIR}/vim-${PV}
 
 PATCHES=( "$FILESDIR/002_all_vim-7.3-apache-83565.patch"
-"$FILESDIR/003_all_vim-7.0-automake-substitutions-93378.patch"
 "$FILESDIR/004_all_vim-7.0-grub-splash-96155.patch"
 "$FILESDIR/005_all_vim_7.1-ada-default-compiler.patch"
 "$FILESDIR/006-vim-8.0-crosscompile.patch" )
