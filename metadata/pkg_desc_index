@@ -4,7 +4,5 @@ app-editors/vim-core 8.2.2434 9999: vim and gvim shared files
 app-editors/visual-studio-code 1.32.3: Multiplatform Visual Studio Code from Microsoft
 dev-lang/julia-bin 1.4.2: High-performance programming language for technical computing
 games-rpg/runescape-launcher 2.2.7: Official RuneScape NXT client launcher
-sci-chemistry/avogadro 1.1.1 1.2.0: Advanced molecular editor that uses Qt4 and OpenGL
 sci-chemistry/avogadro2 1.90.0: Advanced molecule editor and visualizer 2
 sci-chemistry/marvin 20.15: A free molecule editor written in Java
-sys-process/ps_mem 3.7: Python script to determine the RAM usage of a process
