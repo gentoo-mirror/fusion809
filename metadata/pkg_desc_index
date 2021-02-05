@@ -1,6 +1,6 @@
 app-editors/kilo 1.0: A text editor in less than 1000 LOC with syntax highlight and search.
 app-editors/sublime-text 3176: Sophisticated text editor for code, markup and prose
-app-editors/vim-core 8.2.2465 9999: vim and gvim shared files
+app-editors/vim-core 8.2.2466 9999: vim and gvim shared files
 app-editors/visual-studio-code 1.32.3: Multiplatform Visual Studio Code from Microsoft
 dev-lang/julia-bin 1.4.2: High-performance programming language for technical computing
 games-rpg/runescape-launcher 2.2.7: Official RuneScape NXT client launcher
